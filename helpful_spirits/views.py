@@ -7,7 +7,7 @@ from .models import *
 def my():
 	city = City(name='Gdansk')
 	region = Region(name="Wrzeszcz", city_id=city)
-
+	
 	location = Location()
 	#user = User()
 	#poster = Poster()
