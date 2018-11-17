@@ -12,10 +12,10 @@ class SimpleForm(Form):
 class Register(Form):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password_repetition = PasswordField('Password repetition', validators=[DataRequired(), EqualTo(password, 'Passwords must match!')])
+    password_repetition = PasswordField('Confirm password', validators=[DataRequired(), EqualTo(password, message='Passwords must match!')])
     birth_date = StringField('Date', validators=[DataRequired()])
     mail = StringField('Email', validators=[DataRequired(), Email()])
-    tel = StringField('Tel', validators=[DataRequired()])
+    tel = StringField('Phone number', validators=[DataRequired()])
 
 
 class Login(Form):
