@@ -16,6 +16,10 @@
             <div class="alert alert-danger py-2 my-1">Wrong category!</div>
         {% endif %}
 
+        {% if form.date_error %}
+            <div class="alert alert-danger py-2 my-1">Wrong date!</div>
+        {% endif %}
+
 
 
         <form id="register-form" method="POST" action="/add_poster">
