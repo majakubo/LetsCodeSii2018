@@ -39,3 +39,4 @@ class AddPoster(Form):
     location_street = StringField('Street', validators=[DataRequired()])
     location_street_number = StringField('Street number', validators=[DataRequired()])
     category_name = StringField('Category', validators=[DataRequired()])
+
