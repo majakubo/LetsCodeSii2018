@@ -1,5 +1,4 @@
 from flask_wtf import Form
-
 from wtforms.fields import StringField, BooleanField, PasswordField, DateField
 from flask_wtf.html5 import URLField
 import datetime
@@ -15,9 +14,10 @@ class Register(Form):
     password = PasswordField('Password', validators=[DataRequired()])
     password_repetition = PasswordField('Password repetition',
                                         validators=[DataRequired(), EqualTo(password, 'Passwords must match!')])
+    password_repetition = PasswordField('Confirm password', validators=[DataRequired(), EqualTo(password, message='Passwords must match!')])
     birth_date = StringField('Date', validators=[DataRequired()])
     mail = StringField('Email', validators=[DataRequired(), Email()])
-    tel = StringField('Tel', validators=[DataRequired()])
+    tel = StringField('Phone number', validators=[DataRequired()])
 
 
 class Login(Form):

@@ -1,7 +1,8 @@
-from helpful_spirits import app
+from helpful_spirits import app, db
 from flask import render_template, redirect
 from .models import *
-from .forms import SimpleForm, AddPoster
+from .forms import SimpleForm, Register, Login
+
 
 
 @app.route('/')
@@ -9,9 +10,13 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/login')
+@app.route('/login', methods= ('GET','POST'))
 def login():
-    return "You are in login site"
+    form = Login()
+    if form.validate_on_submit():
+        #TODO: tutaj jakies odczytanko z bazy
+        return redirect('/')
+    return render_template('login.html', form=form)
 
 
 @app.route('/simple_query', methods=('GET', 'POST'))
@@ -22,9 +27,13 @@ def query():
     return render_template('simple_form_test.html', form=form)
 
 
-@app.route('/register')
+@app.route('/register', methods=('GET','POST'))
 def register():
-    return "You are in register site"
+    form = Register()
+    if form.validate_on_submit():
+        #TODO: tutaj jakies wpisanko do bazy
+        return redirect('/')
+    return render_template('register.html', form=form)
 
 
 @app.route('/add_poster', methods=("GET", "POST"))

@@ -1,0 +1,7 @@
+{% macro render_field(field) %}
+  {{ field.label }}
+  {{ field(**kwargs)|safe }}
+  {% if field.errors %}
+    <div class="alert alert-danger py-2 my-1">Wrong data!</div>
+  {% endif %}
+{% endmacro %}
