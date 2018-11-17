@@ -2,27 +2,18 @@ from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
 
 
-# todo potem chyba wszystkie nulalble trzeba wpisac false
-
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    regions = db.relationship('Region', backref='city')
-
-
-class Region(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
-    city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
-    volunteers = db.relationship('Volunteer', backref='region')
-    locations = db.relationship('Location', backref='region')
+    name = db.Column(db.String(50), nullable=False, unique=True)
+    volunteers = db.relationship('Volunteer', backref='city')
+    locations = db.relationship('Location', backref='city')
 
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(50), nullable=False)
     number = db.Column(db.String(50), nullable=False)
-    region_id = db.Column(db.Integer, db.ForeignKey('region.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
     posters = db.relationship('Poster', backref='location')
 
 
@@ -56,7 +47,7 @@ class Volunteer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     is_active = db.Column(db.Boolean, default=False, nullable=False)
-    region_id = db.Column(db.Integer, db.ForeignKey('region.id'), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
 
 
 class Specialisation(db.Model):

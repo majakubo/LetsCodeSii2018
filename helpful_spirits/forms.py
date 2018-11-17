@@ -5,6 +5,7 @@ from flask_wtf.html5 import URLField
 import datetime
 from wtforms.validators import DataRequired, EqualTo, Email
 
+
 class SimpleForm(Form):
     name = StringField('description')
 
@@ -12,7 +13,8 @@ class SimpleForm(Form):
 class Register(Form):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password_repetition = PasswordField('Password repetition', validators=[DataRequired(), EqualTo(password, 'Passwords must match!')])
+    password_repetition = PasswordField('Password repetition',
+                                        validators=[DataRequired(), EqualTo(password, 'Passwords must match!')])
     birth_date = StringField('Date', validators=[DataRequired()])
     mail = StringField('Email', validators=[DataRequired(), Email()])
     tel = StringField('Tel', validators=[DataRequired()])
@@ -32,5 +34,7 @@ class AddPoster(Form):
     end_date = DateField('End date', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    location = StringField('Location', validators=[DataRequired()])
-    category = StringField('Category', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
+    location_street = StringField('Street', validators=[DataRequired()])
+    location_street_number = StringField('Street number', validators=[DataRequired()])
+    category_name = StringField('Category', validators=[DataRequired()])
