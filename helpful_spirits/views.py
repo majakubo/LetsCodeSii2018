@@ -1,13 +1,22 @@
 from helpful_spirits import app
 from flask import render_template, redirect
 from .models import *
-from .forms import SimpleForm
+from .forms import SimpleForm, Login
+from flask_login import login_required, login_user
+
+
 
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
+
+@app.route('/foo', methods=["GET", "POST"])
+@login_required
+def foo():
+
+    return "only logged in user can reach this site"
 
 @app.route('/login')
 def login():
