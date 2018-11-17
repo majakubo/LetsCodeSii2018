@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% from "includes/_forms.html" import render_field %}
+
+{% block title %} User Login {% endblock %}
+
+{% block body %}
+    <div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
+        {% if form.errors %}
+            <div class="alert alert-danger py-2 my-1">Wrong data!</div>
+        {% endif %}
+
+        {% if form.city_error %}
+            <div class="alert alert-danger py-2 my-1">Wrong city!</div>
+        {% endif %}
+        {% if form.category_error %}
+            <div class="alert alert-danger py-2 my-1">Wrong category!</div>
+        {% endif %}
+
+        {% if form.date_error %}
+            <div class="alert alert-danger py-2 my-1">Wrong date!</div>
+        {% endif %}
+
+
+
+        <form id="register-form" method="POST" action="/add_poster">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group mx-3">
+                {{ render_field(form.title, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.description, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.start_date, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.end_date, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.city, class_="form-control") }}
+            </div>
+
+            <div class="form-group mx-3">
+                {{ render_field(form.location_street, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.location_street_number, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.category_name, class_="form-control") }}
+            </div>
+
+            <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
+        </form>
+    </div>
+
+
+{% endblock %}
+
+

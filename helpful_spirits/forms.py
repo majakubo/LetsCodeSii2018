@@ -34,8 +34,8 @@ class SearchCity(Form):
 
 
 class AddPoster(Form):
-    city_choices = [(city, city.name) for city in City.get_all()]
-    category_choices = [(category, category.name) for category in Category.get_all() ]
+    city_choices = [(city.name, city.name) for city in City.get_all()]
+    category_choices = [(category.name, category.name) for category in Category.get_all() ]
     start_date = DateField('Start date', validators=[DataRequired()], default=datetime.datetime.now().date())
     end_date = DateField('End date', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
