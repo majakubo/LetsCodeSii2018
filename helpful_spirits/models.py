@@ -3,7 +3,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 # todo potem chyba wszystkie nulalble trzeba wpisac false
-# todo potem dodac relationshipy w druga strone
 
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -81,6 +80,7 @@ class Poster(db.Model):
     title = db.Column(db.String(100))
     description = db.Column(db.String(1000))
     location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
+    victim_id = db.Column(db.Integer, db.ForeignKey('victim.id'))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
 

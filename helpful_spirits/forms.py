@@ -1,4 +1,5 @@
 from flask_wtf import Form
+
 from wtforms.fields import StringField, BooleanField, PasswordField, validators
 from flask_wtf.html5 import URLField
 from wtforms.validators import DataRequired, urllib, EqualTo, Email
@@ -32,5 +33,3 @@ class AddPoster(Form):
     description = StringField('Description')
     location = StringField('Location')
     category = StringField('Category')
-
-
