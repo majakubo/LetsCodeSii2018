@@ -6,33 +6,33 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
     regions = db.relationship('Region', backref='city')
 
 
 class Region(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    city_id = db.Column(db.Integer, db.ForeignKey('city.id'))
+    name = db.Column(db.String(50), nullable=False)
+    city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
     volunteers = db.relationship('Volunteer', backref='region')
     locations = db.relationship('Location', backref='region')
 
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    street = db.Column(db.String(50))
-    number = db.Column(db.String(50))
-    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
+    street = db.Column(db.String(50), nullable=False)
+    number = db.Column(db.String(50), nullable=False)
+    region_id = db.Column(db.Integer, db.ForeignKey('region.id'), nullable=False)
     posters = db.relationship('Poster', backref='location')
 
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(50))
-    surname = db.Column(db.String(50))
-    birthday = db.Column(db.Date)
-    phone = db.Column(db.String)
-    password_hash = db.Column(db.String)
+    firstname = db.Column(db.String(50), nullable=False)
+    surname = db.Column(db.String(50), nullable=False)
+    birthday = db.Column(db.Date, nullable=False)
+    phone = db.Column(db.String, nullable=False)
+    password_hash = db.Column(db.String, nullable=False)
 
     @property
     def password(self):
@@ -48,40 +48,40 @@ class User(db.Model):
 
 class Victim(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posters = db.relationship('Poster', backref='victim')
 
 
 class Volunteer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    is_active = db.Column(db.Boolean, default=False)
-    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    is_active = db.Column(db.Boolean, default=False, nullable=False)
+    region_id = db.Column(db.Integer, db.ForeignKey('region.id'), nullable=False)
 
 
 class Specialisation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
+    name = db.Column(db.String(50), nullable=False)
 
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    danger_level = db.Column(db.Integer)
+    name = db.Column(db.String(50), nullable=False)
+    danger_level = db.Column(db.Integer, nullable=False)
     posters = db.relationship('Poster', backref='category')
 
 
 class Poster(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    add_date = db.Column(db.Date)
-    start_date = db.Column(db.Date)
+    add_date = db.Column(db.Date, nullable=False)
+    start_date = db.Column(db.Date, nullable=False)
     end_date = db.Column(db.Date)
-    is_active = db.Column(db.Boolean)
-    title = db.Column(db.String(100))
-    description = db.Column(db.String(1000))
-    location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
-    victim_id = db.Column(db.Integer, db.ForeignKey('victim.id'))
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    is_active = db.Column(db.Boolean, nullable=False)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(1000), nullable=False)
+    location_id = db.Column(db.Integer, db.ForeignKey('location.id'), nullable=False)
+    victim_id = db.Column(db.Integer, db.ForeignKey('victim.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
 
 invited = db.Table('invited',
