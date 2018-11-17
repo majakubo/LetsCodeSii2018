@@ -1,5 +1,5 @@
 from helpful_spirits import app
-from flask import render_template, redirect
+from flask import render_template
 from .models import *
 from .forms import SimpleForm
 
@@ -17,13 +17,9 @@ def login():
 @app.route('/simple_query')
 def query():
     form = SimpleForm()
-   # if form.validate_on_submit():
-    return redirect('/test')
-    return render_template("simple_form_test.html", form=form)
-
-@app.route('/test')
-def testtt():
-    return render_template('test.html')
+    if form.validate_on_submit():
+        name = form.name.data
+        print(name)
 
 
 @app.route('/register')
