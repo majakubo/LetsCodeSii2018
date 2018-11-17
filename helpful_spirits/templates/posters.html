@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} User Login {% endblock %}
+
+{% block body %}
+    <div id="wrapper-div" style="background-color: #f8f9fa;">
+
+        <div id="posters">
+                {% for poster in posters %}
+                    <p>
+                        {{ poster.title }}
+                        {{ poster.add_date }}
+                        {{ poster.end_date }}
+                        {{ poster.is_active }}
+                        {{ poster.title }}
+                        {{ poster.description }}
+                    </p>
+                {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+
