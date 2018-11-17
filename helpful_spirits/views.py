@@ -1,4 +1,4 @@
-from helpful_spirits import app
+from helpful_spirits import app, db
 from flask import render_template
 from .models import *
 from .forms import SimpleForm
