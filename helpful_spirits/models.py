@@ -109,7 +109,11 @@ class Poster(db.Model):
 
     @staticmethod
     def get_all_active():
-        return Poster.query.filter_by(is_active=False).filter(Poster.end_date <= date.today()).all()
+        return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).all()
+
+    @staticmethod
+    def get_by_id(id):
+        return Poster.query.filter_by(id=id).first()
 
 
 invited = db.Table('invited',

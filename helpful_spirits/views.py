@@ -77,9 +77,7 @@ def add_poster():
     form = AddPoster()
     form.cities = City.get_all()
     if form.validate_on_submit():
-        print(form.city.data, '***********************')
         city = City.get_by_name(form.city.data)
-        print(9 * '*', city.name)
         category = Category.get_by_name(form.category_name.data)
 
         if city is None:
@@ -115,8 +113,11 @@ def posters():
 
 @app.route('/posters/<id>')
 def poster(id):
-    return "you are at specific site"
-
+    #poster = Poster.get_by_id(id)
+    #if poster is None:
+    #    return redirect(url_for('posters'))
+    #return render_template('poster.html', poster=poster)
+    pass
 
 @app.route('/my_profile')
 def my_profile():
