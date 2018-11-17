@@ -38,11 +38,7 @@
                 {{ render_field(form.end_date, class_="form-control") }}
             </div>
             <div class="form-group mx-3">
-                <select>
-                {% for city in form.cities %}
-                    <option value="{{ city }}" id='city' name='city' selected={{ city.name }} >{{ city.name }}</option>
-                {% endfor %}
-                </select>
+                {{ render_field(form.city, class_="form-control") }}
             </div>
 
             <div class="form-group mx-3">

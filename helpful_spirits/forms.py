@@ -1,8 +1,10 @@
 import datetime
 
 from flask_wtf import Form
-from wtforms.fields import StringField, PasswordField, DateField
+from wtforms.fields import StringField, PasswordField, DateField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email
+
+from .models import City, Category
 
 
 class SimpleForm(Form):
@@ -30,12 +32,15 @@ class SearchCity(Form):
     city_name = StringField('City', validators=[DataRequired()])
 
 
+
 class AddPoster(Form):
+    city_choices = [(city, city.name) for city in City.get_all()]
+    category_choices = [(category, category.name) for category in Category.get_all() ]
     start_date = DateField('Start date', validators=[DataRequired()], default=datetime.datetime.now().date())
     end_date = DateField('End date', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description', validators=[DataRequired()])
-    city = StringField('City', validators=[DataRequired()])
+    city = SelectField('City', choices=city_choices, validators=[DataRequired()])
     location_street = StringField('Street', validators=[DataRequired()])
     location_street_number = StringField('Street number', validators=[DataRequired()])
-    category_name = StringField('Category', validators=[DataRequired()])
+    category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
