@@ -1,10 +1,10 @@
 import datetime
 
 from helpful_spirits import app, db
-from flask import render_template, redirect
+from flask import render_template, redirect, flash, request, url_for
 from .models import *
 from .forms import SimpleForm, Register, Login, AddPoster
-
+from flask_login import login_required, login_user
 
 # todo
 @app.route('/')
@@ -32,12 +32,24 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/login', methods=('GET', 'POST'))
+
+@app.route('/foo', methods=["GET", "POST"])
+@login_required
+def foo():
+    return "only logged in user can reach this site"
+
+@app.route('/login', methods= ('GET','POST'))
 def login():
     form = Login()
     if form.validate_on_submit():
-        # TODO: tutaj jakies odczytanko z bazy
-        return redirect('/')
+        #TODO: tutaj jakies odczytanko z bazy
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            login_user(user)
+            flash('Logged in successfully as {}.'.format(user.firstname))
+            return redirect(request.args.get('next') or url_for('index'))
+        flash('Incorrect username or password.')
+
     return render_template('login.html', form=form)
 
 
@@ -89,7 +101,9 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-    return render_template('posters.html', posters=Poster.query.all())
+    posters = Poster.query.all()
+    iterator_ = zip(posters, range(len(posters)))
+    return render_template('posters.html', posters=iterator_)
 
 
 @app.route('/posters/<id>')

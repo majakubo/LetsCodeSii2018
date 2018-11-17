@@ -1,7 +1,7 @@
-.idea/
-__pycache__/
+.idea/*
+.idea
+__pycache__
+__pycache__/*
 *.pyc
-helpful_spirits/__pycache__/__init__.cpython-36.pyc
-helpful_spirits/__pycache__/models.cpython-36.pyc
-helpful_spirits/__pycache__/views.cpython-36.pyc
+*.pyo
 

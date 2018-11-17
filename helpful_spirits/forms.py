@@ -10,7 +10,8 @@ class SimpleForm(Form):
 
 
 class Register(Form):
-    username = StringField('Username', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
+    surname = StringField('Surname', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password_repetition = PasswordField('Confirm password',
                                         validators=[DataRequired(), EqualTo(password, message='Passwords must match!')])
@@ -20,7 +21,7 @@ class Register(Form):
 
 
 class Login(Form):
-    username = StringField('Username', validators=[DataRequired()])
+    mail = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
 
 
