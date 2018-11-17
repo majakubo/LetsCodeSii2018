@@ -2,6 +2,7 @@ from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
 
+
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
@@ -11,6 +12,10 @@ class City(db.Model):
     @staticmethod
     def get_by_name(name):
         return City.query.filter_by(name=name).first()
+
+    @staticmethod
+    def get_all():
+        return City.query.all()
 
 
 class Location(db.Model):
@@ -89,6 +94,10 @@ class Poster(db.Model):
     location_id = db.Column(db.Integer, db.ForeignKey('location.id'), nullable=False)
     victim_id = db.Column(db.Integer, db.ForeignKey('victim.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+
+    @staticmethod
+    def get_all():
+        return Poster.query.all()
 
 
 invited = db.Table('invited',
