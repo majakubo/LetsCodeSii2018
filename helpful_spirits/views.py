@@ -1,4 +1,4 @@
-from helpful_spirits import app
+from helpful_spirits import app, db
 from flask import render_template, redirect
 from .models import *
 from .forms import SimpleForm, Register
@@ -12,7 +12,6 @@ def index():
 @app.route('/login')
 def login():
     return "You are in login site"
-
 
 @app.route('/simple_query', methods=('GET','POST'))
 def query():

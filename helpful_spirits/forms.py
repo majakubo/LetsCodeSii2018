@@ -1,9 +1,9 @@
 from flask_wtf import Form
-
 from wtforms.fields import StringField, BooleanField, PasswordField, DateField
 from flask_wtf.html5 import URLField
 import datetime
 from wtforms.validators import DataRequired, EqualTo, Email
+
 
 class SimpleForm(Form):
     name = StringField('description')
