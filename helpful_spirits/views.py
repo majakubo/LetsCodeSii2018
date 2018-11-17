@@ -4,6 +4,7 @@ from .models import *
 from .forms import SimpleForm, Register, Login
 
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
@@ -17,14 +18,14 @@ def login():
         return redirect('/')
     return render_template('login.html', form=form)
 
-@app.route('/simple_query', methods=('GET','POST'))
+
+@app.route('/simple_query', methods=('GET', 'POST'))
 def query():
     form = SimpleForm()
     if form.validate_on_submit():
-        name = form.name.data
-        print(name)
         return redirect('/posters')
-    return render_template('simple_form_test.html',form=form)
+    return render_template('simple_form_test.html', form=form)
+
 
 @app.route('/register', methods=('GET','POST'))
 def register():
@@ -35,9 +36,26 @@ def register():
     return render_template('register.html', form=form)
 
 
-@app.route('/add_poster')
+@app.route('/add_poster', methods=("GET", "POST"))
 def add_poster():
-    return "You are in add poster site"
+    form = AddPoster()
+    #todo
+    if form.validate_on_submit():
+        print("HERE")
+        location_street = form.location_street.data
+        location_street_number = form.location_street_number.data
+        city = City(name=form.city.data)
+        location = Location(street=location_street, number=location_street_number, city_id=city)
+        category = Category(name=form.category_name.data)
+        poster = Poster(title=form.title.data, description=form.description.data, start_date=form.start_date.data,
+                        end_date=form.end_date.data, location=location, category=category)
+
+        print("HERE")
+        db.session.add(city)
+        db.session.add(location)
+        db.session.add(poster)
+        db.session.commit()
+    return render_template('add_poster.html', form=form)
 
 
 @app.route('/posters')
@@ -57,17 +75,17 @@ def my_profile():
     return "You are in my profile site"
 
 
+##########################################
 # TODO
-@app.route('/testdata')
-def test_data():
-    Poster.query.delete()
-    p1 = Poster(is_active=True, title='ELO')
-    p2 = Poster(is_active=False, title='ELO')
-    p3 = Poster(is_active=False, title='bykankub')
-    p4 = Poster(is_active=False, title='Siemanko byku')
-    db.session.add(p1)
-    db.session.add(p2)
-    db.session.add(p3)
-    db.session.add(p4)
+##########################################
+
+@app.route('/add_cities')
+def add_cities():
+    db.session.add(City(name="Gdansk"))
+    db.session.add(City(name="Gdynia"))
+    db.session.add(City(name="Sopot"))
+    db.session.add(City(name="Warszawa"))
+    db.session.add(City(name="Krakow"))
+    db.session.add(City(name="Katowice"))
+    db.session.add(City(name="Grudziadz"))
     db.session.commit()
-    
