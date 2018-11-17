@@ -20,6 +20,9 @@
                             <th scope="col">#</th>
                             <th scope="col">Title</th>
                             <th scope="col">Description</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Author</th>
                             <th scope="col">Submit date</th>
                             <th scope="col">Finish date</th>
                         </tr>
@@ -27,57 +30,58 @@
                     <tbody>
 
                         {% for poster, index in posters %}
-                        {% if poster.is_active!=0 %}
                         <tr>
                             <th scope="row">{{ index+1 }}</th>
                             <td>{{ poster.title }}</td>
                             <td>{{ poster.description }}</td>
+                            <td>{{ poster.location.city.name }}</td>
+                            <td>{{ poster.category.name }}</td>
+                            <td>{{ poster.victim.name }} {{ poster.victim.surname }}</td>
                             <td>{{ poster.add_date }}</td>
                             <td>{{ poster.end_date }}</td>
                         </tr>
-                        {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>
 
 
 
+>>>>>>> 97e622b9d29c94e7ef3feb784fb2cd30b2078170
 
 
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 {% endblock %}
 
 <table class="table">
     <thead class="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-        </tr>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+    </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
+    <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+    </tr>
     </tbody>
 </table>

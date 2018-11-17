@@ -3,7 +3,7 @@
 {% block title %} User Login {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" style="background-color: #f8f9fa;">
+<div id="wrapper-div"  class="py-3"style="background-color: #f8f9fa;">
   {{ form.hidden_tag() }}
 
   <form method="POST" action="/login">
@@ -14,17 +14,10 @@
       {{render_field(form.password, class_="form-control")}}
     </div>
     <p>
-      <input type="submit" class="btn btn-success mx-3" value="Submit">
+      <input type="submit" class="btn btn-success mx-3" value="Login">
       <a href="/register">Register</a>
     </p>
   </form>
-
-
-
-
-
-
-  <button class="btn btn-outline-light my-1 my-sm-0" type="submit">Login</button>
-  </form>
+  
 </div>
 {% endblock %}

@@ -1,3 +1,7 @@
+from datetime import date
+
+from sqlalchemy import func
+
 from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import UserMixin
@@ -82,6 +86,10 @@ class Category(db.Model):
     def get_by_name(name):
         return Category.query.filter_by(name=name).first()
 
+    @staticmethod
+    def get_all():
+        return Category.query.all()
+
 
 class Poster(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -98,6 +106,11 @@ class Poster(db.Model):
     @staticmethod
     def get_all():
         return Poster.query.all()
+
+    @staticmethod
+    def get_all_active():
+        #return Poster.query.filter_by(is_active=False).filter_by(func.DATE(db.Transaction.datetime) <= date.today())
+        return Poster.query.filter_by(is_active=False)
 
 
 invited = db.Table('invited',
