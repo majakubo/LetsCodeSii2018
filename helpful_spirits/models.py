@@ -8,23 +8,23 @@ from werkzeug.security import check_password_hash, generate_password_hash
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    regions = db.relationship('Region', backref='region')
+    regions = db.relationship('Region', backref='city')
 
 
 class Region(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'))
-    # volunteers = db.relationship('Volunteer', backref='volunteer')
-    locations = db.relationship('Location', backref='location')
+    volunteers = db.relationship('Volunteer', backref='region')
+    locations = db.relationship('Location', backref='region')
 
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(50))
     number = db.Column(db.String(50))
-    region = db.Column(db.Integer, db.ForeignKey('region.id'))
-#    posters = db.relationship('Poster', backref='poster')
+    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
+    posters = db.relationship('Poster', backref='location')
 
 
 class User(db.Model):
@@ -34,7 +34,6 @@ class User(db.Model):
     birthday = db.Column(db.Date)
     phone = db.Column(db.String)
     password_hash = db.Column(db.String)
-    #victim_id = db.relationship('Victim.id',uselist=False, backref='user')
 
     @property
     def password(self):
@@ -48,16 +47,17 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-#class Victim(User):
- #   id = db.Column(db.Integer, primary_key=True)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class Victim(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    posters = db.relationship('Poster', backref='victim')
 
-"""
-class Volunteer(User):
+
+class Volunteer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     is_active = db.Column(db.Boolean, default=False)
-    region = db.Column(db.Integer, db.ForeignKey('region.id'))
+    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
 
 
 class Specialisation(db.Model):
@@ -69,6 +69,7 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     danger_level = db.Column(db.Integer)
+    posters = db.relationship('Poster', backref='category')
 
 
 class Poster(db.Model):
@@ -79,9 +80,8 @@ class Poster(db.Model):
     is_active = db.Column(db.Boolean)
     title = db.Column(db.String(100))
     description = db.Column(db.String(1000))
-    victim = db.Column(db.Integer, db.ForeignKey('victim.id'))
-    location = db.Column(db.Integer, db.ForeignKey('location.id'))
-    category = db.Column(db.Integer, db.ForeignKey('category.id'))
+    location_id = db.Column(db.Integer, db.ForeignKey('location.id'))
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
 
 
 invited = db.Table('invited',
@@ -95,4 +95,3 @@ vol_spec = db.Table('vol_spec',
 spec_cat = db.Table('spec_cat',
                     db.Column('specialisation_id', db.Integer, db.ForeignKey('specialisation.id')),
                     db.Column('category_id', db.Integer, db.ForeignKey('category.id')))
-"""
