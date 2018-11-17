@@ -1,6 +1,7 @@
 from helpful_spirits import app
 from flask import render_template
 from .models import *
+from .forms import SimpleForm
 
 @app.route('/')
 def index():
@@ -10,6 +11,12 @@ def index():
 def login():
     return "You are in login site"
 
+@app.route('/simple_query')
+def login():
+    form = SimpleForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        print(name)
 
 @app.route('/register')
 def register():
