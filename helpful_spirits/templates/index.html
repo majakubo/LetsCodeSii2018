@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 {% block title %} Home {% endblock %}
 
-{% block body %} 
+{% block body %}
+<style>
+    .jumbotron {
+        background: url('https://i.imgur.com/R7VIg2y.jpg') no-repeat center center !important;
+        margin-bottom: 0px;
+        height: 350px;
+        color: white;
+        text-shadow: black 0.2em 0.2em 0.2em;
+        background: transparent;
+    }
+</style>
 <div class="jumbotron">
     <h1 class="display-3">Helpful Spirits</h1>
     <p class="lead">We belive in the Spirit of Giving!</p>
@@ -11,6 +21,10 @@
         <a class="btn btn-success btn-lg" href="/register" role="button">Join us!</a>
     </p>
 </div>
-
-
+<div style="background-color: #f8f9fa;" class="px-3 py-3">
+    <h1 class="text-center">Title!</h1>
+    <p>
+        
+    </p>
+</div>
 {% endblock %}
