@@ -77,9 +77,9 @@ def add_poster():
     form = AddPoster()
     form.cities = City.get_all()
     if form.validate_on_submit():
-        print(form.city.data,'***********************')
+        print(form.city.data, '***********************')
         city = City.get_by_name(form.city.data)
-        print(9*'*', city.name)
+        print(9 * '*', city.name)
         category = Category.get_by_name(form.category_name.data)
 
         if city is None:
