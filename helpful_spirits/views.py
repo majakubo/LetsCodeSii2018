@@ -14,9 +14,8 @@ def login():
     return "You are in login site"
 
 
-
 @app.route('/simple_query')
-def login():
+def query():
     form = SimpleForm()
     if form.validate_on_submit():
         name = form.name.data
@@ -35,8 +34,7 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-    posters = Poster.query.all()
-    return render_template('posters.html', posters=posters)
+    return render_template('posters.html', posters=Poster.query.all())
 
 
 @app.route('/posters/<id>')
@@ -52,6 +50,7 @@ def my_profile():
 # TODO
 @app.route('/testdata')
 def test_data():
+    Poster.query.delete()
     p1 = Poster(is_active=True, title='ELO')
     p2 = Poster(is_active=False, title='ELO')
     p3 = Poster(is_active=False, title='bykankub')
@@ -61,3 +60,4 @@ def test_data():
     db.session.add(p3)
     db.session.add(p4)
     db.session.commit()
+    
