@@ -42,7 +42,9 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-    return render_template('posters.html', posters=Poster.query.all())
+    posters = Poster.query.all()
+    iterator_ = zip(posters, range(len(posters)))
+    return render_template('posters.html', posters=iterator_)
 
 
 @app.route('/posters/<id>')
