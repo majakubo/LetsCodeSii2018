@@ -102,6 +102,7 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
+    posters = Poster.query.all()
     iterator_ = zip(posters, range(len(Poster.get_all())))
     return render_template('posters.html', posters=iterator_)
 
