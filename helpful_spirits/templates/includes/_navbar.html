@@ -1,25 +1,16 @@
-<nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">MyFlaskApp</a>
-          </div>
-          <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li><a href="/">Home</a></li>
-              
-            </ul>
-  
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="/register">Register</a></li>
-                <li><a href="/login">Login</a></li>
-  
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </nav>
+<nav class="navbar navbar-dark bg-success sticky-top">
+    <a class="navbar-brand" href="/">Helpful Spirits</a>
+    <form class="form-inline">
+        <input class="form-control mr-sm-1" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light my-1 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="nav list-inline">
+        <li class="nav-item">
+          <a class="nav-link" href="/login"><button class="btn btn-outline-light" type="submit">Login</button></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/register"><button class="btn btn-outline-light" type="submit">Register</button></a>
+        </li>
+
+    </ul>
+  </nav>
