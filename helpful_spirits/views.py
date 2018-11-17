@@ -86,6 +86,9 @@ def add_poster():
         if category is None:
             form.category_error = True
             return render_template('add_poster.html', form=form)
+        if form.end_date.data < form.start_date.data or form.end_date.data < date.today():
+            form.date_error = True
+            return render_template('add_poster.html', form=form)
 
         location = Location.add_new_location(form.location_street.data, form.location_street_number.data, city.id)
 
@@ -97,13 +100,19 @@ def add_poster():
                               victim_id=1))
         db.session.commit()
         return redirect(url_for('posters'))
+
     return render_template('add_poster.html', form=form)
 
 
 @app.route('/posters')
 def posters():
+<<<<<<< HEAD
     posters = Poster.query.all()
     iterator_ = zip(posters, range(len(Poster.get_all())))
+=======
+    all_active_posters = Poster.get_all_active()
+    iterator_ = zip(all_active_posters, range(len(all_active_posters)))
+>>>>>>> 2ef6b8fb1879c57d798809ed4a2dcf23fc37e075
     return render_template('posters.html', posters=iterator_)
 
 

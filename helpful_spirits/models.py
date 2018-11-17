@@ -109,8 +109,7 @@ class Poster(db.Model):
 
     @staticmethod
     def get_all_active():
-        #return Poster.query.filter_by(is_active=False).filter_by(func.DATE(db.Transaction.datetime) <= date.today())
-        return Poster.query.filter_by(is_active=False)
+        return Poster.query.filter_by(is_active=False).filter(Poster.end_date <= date.today()).all()
 
 
 invited = db.Table('invited',
