@@ -1,11 +1,9 @@
-from helpful_spirits import app
-from flask import render_template, redirect
+from helpful_spirits import app, db
+from flask import render_template, redirect, flash, request, url_for
 from .models import *
-from .forms import SimpleForm, Login
 from flask_login import login_required, login_user
 
-
-
+from .forms import SimpleForm, Register, Login
 
 @app.route('/')
 def index():
@@ -15,13 +13,20 @@ def index():
 @app.route('/foo', methods=["GET", "POST"])
 @login_required
 def foo():
-
     return "only logged in user can reach this site"
 
-@app.route('/login')
+@app.route('/login', methods= ('GET','POST'))
 def login():
-    return "You are in login site"
-
+    form = Login()
+    if form.validate_on_submit():
+        #TODO: tutaj jakies odczytanko z bazy
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            login_user(user)
+            flash('Logged in successfully as {}.'.format(user.firstname))
+            return redirect(request.args.get('next') or url_for('index'))
+        flash('Incorrect username or password.')
+    return render_template('login.html', form=form)
 
 @app.route('/simple_query', methods=('GET','POST'))
 def query():
@@ -32,9 +37,13 @@ def query():
         return redirect('/posters')
     return render_template('simple_form_test.html',form=form)
 
-@app.route('/register')
+@app.route('/register', methods=('GET','POST'))
 def register():
-    return "You are in register site"
+    form = Register()
+    if form.validate_on_submit():
+        #TODO: tutaj jakies wpisanko do bazy
+        return redirect('/')
+    return render_template('register.html', form=form)
 
 
 @app.route('/add_poster')
