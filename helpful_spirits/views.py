@@ -1,8 +1,9 @@
 from helpful_spirits import app, db
-from flask import render_template, redirect
+from flask import render_template, redirect, flash, request, url_for
 from .models import *
-from .forms import SimpleForm, Register, Login
+from flask_login import login_required, login_user
 
+from .forms import SimpleForm, Register, Login
 
 
 @app.route('/')
@@ -10,12 +11,22 @@ def index():
     return render_template("index.html")
 
 
+@app.route('/foo', methods=["GET", "POST"])
+@login_required
+def foo():
+    return "only logged in user can reach this site"
+
 @app.route('/login', methods= ('GET','POST'))
 def login():
     form = Login()
     if form.validate_on_submit():
         #TODO: tutaj jakies odczytanko z bazy
-        return redirect('/')
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is not None:
+            login_user(user)
+            flash('Logged in successfully as {}.'.format(user.firstname))
+            return redirect(request.args.get('next') or url_for('index'))
+        flash('Incorrect username or password.')
     return render_template('login.html', form=form)
 
 

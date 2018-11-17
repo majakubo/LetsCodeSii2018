@@ -1,6 +1,6 @@
 from . import db
 from werkzeug.security import check_password_hash, generate_password_hash
-
+from flask_login import UserMixin
 
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +17,7 @@ class Location(db.Model):
     posters = db.relationship('Poster', backref='location')
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50), nullable=False)
     surname = db.Column(db.String(50), nullable=False)
@@ -37,13 +37,13 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-class Victim(db.Model):
+class Victim(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posters = db.relationship('Poster', backref='victim')
 
 
-class Volunteer(db.Model):
+class Volunteer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     is_active = db.Column(db.Boolean, default=False, nullable=False)
