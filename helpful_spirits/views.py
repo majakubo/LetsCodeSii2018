@@ -5,8 +5,9 @@ from .models import *
 
 @app.route('/my')
 def my():
-	city = City(name='Gdańsk')
+	city = City(name='Gdansk')
 	region = Region(name="Wrzeszcz", city_id=city)
+
 	location = Location()
 	#user = User()
 	return region.city_id.name
