@@ -6,7 +6,6 @@ from .models import *
 def index():
     return render_template("index.html")
 
-
 @app.route('/login')
 def login():
     return "You are in login site"

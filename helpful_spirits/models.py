@@ -8,25 +8,25 @@ from werkzeug.security import check_password_hash, generate_password_hash
 class City(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
-    regions = db.relationship('Region', backref='region')
+    regions = db.relationship('Region', backref='city')
 
 
 class Region(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'))
-    # volunteers = db.relationship('Volunteer', backref='volunteer')
-    locations = db.relationship('Location', backref='location')
+    #volunteers = db.relationship('Volunteer', backref='region')
+    locations = db.relationship('Location', backref='region')
 
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     street = db.Column(db.String(50))
     number = db.Column(db.String(50))
-    region = db.Column(db.Integer, db.ForeignKey('region.id'))
-#    posters = db.relationship('Poster', backref='poster')
+    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
+    #posters = db.relationship('Poster', backref='location')
 
-
+"""
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50))
@@ -34,7 +34,6 @@ class User(db.Model):
     birthday = db.Column(db.Date)
     phone = db.Column(db.String)
     password_hash = db.Column(db.String)
-    #victim_id = db.relationship('Victim.id',uselist=False, backref='user')
 
     @property
     def password(self):
@@ -48,11 +47,11 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-#class Victim(User):
- #   id = db.Column(db.Integer, primary_key=True)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+class Victim(User):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-"""
+
 class Volunteer(User):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
