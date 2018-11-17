@@ -8,6 +8,10 @@ class City(db.Model):
     volunteers = db.relationship('Volunteer', backref='city')
     locations = db.relationship('Location', backref='city')
 
+    @staticmethod
+    def get_by_name(name):
+        return City.query.filter_by(name=name).first()
+
 
 class Location(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,6 +19,13 @@ class Location(db.Model):
     number = db.Column(db.String(50), nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
     posters = db.relationship('Poster', backref='location')
+
+    @staticmethod
+    def add_new_location(street, number, city_id):
+        location = Location(street=street, number=number, city_id=city_id)
+        db.session.add(location)
+        db.session.commit()
+        return Location.query.filter_by(street=street, number=number, city_id=city_id).first()
 
 
 class User(db.Model, UserMixin):
@@ -24,6 +35,7 @@ class User(db.Model, UserMixin):
     birthday = db.Column(db.Date, nullable=False)
     phone = db.Column(db.String, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
 
     @property
     def password(self):
@@ -60,6 +72,10 @@ class Category(db.Model):
     name = db.Column(db.String(50), nullable=False)
     danger_level = db.Column(db.Integer, nullable=False)
     posters = db.relationship('Poster', backref='category')
+
+    @staticmethod
+    def get_by_name(name):
+        return Category.query.filter_by(name=name).first()
 
 
 class Poster(db.Model):
