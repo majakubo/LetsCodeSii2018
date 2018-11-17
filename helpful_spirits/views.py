@@ -1,7 +1,7 @@
 from helpful_spirits import app
 from flask import render_template, redirect
 from .models import *
-from .forms import SimpleForm
+from .forms import SimpleForm, Register
 
 
 @app.route('/')
@@ -23,9 +23,13 @@ def query():
         return redirect('/posters')
     return render_template('simple_form_test.html',form=form)
 
-@app.route('/register')
+@app.route('/register', methods=('GET','POST'))
 def register():
-    return "You are in register site"
+    form = Register()
+    if form.validate_on_submit():
+        #TODO: tutaj jakies wpisanko do bazy
+        return redirect('/')
+    return render_template('register.html', form=form)
 
 
 @app.route('/add_poster')
