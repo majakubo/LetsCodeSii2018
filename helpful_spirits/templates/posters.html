@@ -2,14 +2,12 @@
 {% block title %} Posters {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" style="background-color: #f8f9fa;">
+<div id="wrapper-div row container" style="background-color: #f8f9fa;">
 
-    <div class="col-3">
-        <p>FILTER_PLACEHOLDER
-        
-        </p>
+    <div class="col-4">
+      FILTER_PLACEHOLDER
     </div>
-    <div class="col-9">
+    <div class="col-8">
         <div id="posters">
             <table class="table">
                 <thead class="thead-dark">
@@ -29,7 +27,7 @@
                     <tr>
                         <th scope="row">{{ index+1 }}</th>
                         <td>{{ poster.title }}</td>
-                        <td> {{ poster.description }}</td>
+                        <td>{{ poster.description }}</td>
                         <td>{{ poster.add_date }}</td>
                         <td>{{ poster.end_date }}</td>
 
