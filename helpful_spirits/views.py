@@ -7,9 +7,20 @@ from .forms import SimpleForm
 def index():
     return render_template("index.html")
 
+@app.route('/my')
+def my():
+	city = City(name='Gdansk')
+	region = Region(name="Wrzeszcz", city_id=city)
+	
+	location = Location()
+	#user = User()
+	#poster = Poster()
+	return region.city_id.name
+
 @app.route('/login')
 def login():
     return "You are in login site"
+
 
 @app.route('/simple_query')
 def login():
@@ -17,6 +28,7 @@ def login():
     if form.validate_on_submit():
         name = form.name.data
         print(name)
+
 
 @app.route('/register')
 def register():
