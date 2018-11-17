@@ -1,4 +1,4 @@
-from HelpfulSpirits import app
+from helpful_spirits import app
 
 @app.route('/')
 def index():
