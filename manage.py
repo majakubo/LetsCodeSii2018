@@ -1,7 +1,8 @@
 # manage.py
 
+from helpful_spirits import app
 from flask_script import Manager
-from .helpful_spirits import app
+
 
 manager = Manager(app)
 
