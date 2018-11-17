@@ -4,8 +4,6 @@
 {% block title %} User Login {% endblock %}
 
 {% block body %}
-# form.cities
-
     <div id="wrapper-div" style="background-color: #f8f9fa;">
         {% if form.errors %}
             <div class="alert alert-danger py-2 my-1">Wrong data!</div>
@@ -36,20 +34,19 @@
                 {{ render_field(form.end_date, class_="form-control") }}
             </div>
             <div class="form-group mx-3">
-                {{ render_field(form.city, class_="form-control") }}
+                <select>
+                {% for city in form.cities %}
+                    <option value="{{ city }}" id='city' name='city' selected={{ city.name }} >{{ city.name }}</option>
+                {% endfor %}
+                </select>
             </div>
+
             <div class="form-group mx-3">
                 {{ render_field(form.location_street, class_="form-control") }}
             </div>
             <div class="form-group mx-3">
                 {{ render_field(form.location_street_number, class_="form-control") }}
             </div>
-            <select>
-
-                {% for city in form.cities %}
-                    <option value="{{ city }}" selected={{ city }} >{{ city }}</option>
-                {% endfor %}
-            </select>
             <div class="form-group mx-3">
                 {{ render_field(form.category_name, class_="form-control") }}
             </div>
