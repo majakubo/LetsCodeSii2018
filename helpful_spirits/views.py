@@ -21,7 +21,7 @@ def login():
     form = Login()
     if form.validate_on_submit():
         #TODO: tutaj jakies odczytanko z bazy
-        user = User.query.filter_by(username=form.username.data).first()
+        user = User.query.filter_by(username=form.email.data).first()
         if user is not None:
             login_user(user)
             flash('Logged in successfully as {}.'.format(user.firstname))
@@ -38,7 +38,7 @@ def query():
     return render_template('simple_form_test.html', form=form)
 
 
-@app.route('/register', methods=('GET','POST'))
+@app.route('/register', methods=('GET', 'POST'))
 def register():
     form = Register()
     if form.validate_on_submit():
