@@ -14,13 +14,8 @@ def login():
     return "You are in login site"
 
 
-<<<<<<< HEAD
-@app.route('/simple_query', methods=('GET','POST'))
-def simple():
-=======
 @app.route('/simple_query')
 def query():
->>>>>>> b92c038e5e29c1a653f3e0c823834f74815458dd
     form = SimpleForm()
    # if form.validate_on_submit():
     return redirect('/test')
@@ -56,9 +51,6 @@ def my_profile():
     return "You are in my profile site"
 
 
-<<<<<<< HEAD
-
-=======
 # TODO
 @app.route('/testdata')
 def test_data():
@@ -73,4 +65,3 @@ def test_data():
     db.session.add(p4)
     db.session.commit()
     
->>>>>>> b92c038e5e29c1a653f3e0c823834f74815458dd
