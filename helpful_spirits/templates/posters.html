@@ -2,7 +2,7 @@
 {% block title %} Posters {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" style="background-color: #f8f9fa;">
+    <div id="wrapper-div" style="background-color: #f8f9fa;">
     <div class="row py-3 px-3">
         <div class="col-3 text-center">
             <h2>Filters</h2>
@@ -16,31 +16,27 @@
             <div id="posters">
                 <table class="table">
                     <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Description</th>
-                            <th scope="col">Submit date</th>
-                            <th scope="col">Finish date</th>
-                        </tr>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Submit date</th>
+                        <th scope="col">Finish date</th>
+                    </tr>
                     </thead>
                     <tbody>
 
-                        {% for poster, index in posters %}
+                    {% for poster, index in posters %}
                         <tr>
-                            <th scope="row">{{ index+1 }}</th>
+                            <th scope="row">{{ index +  1 }}</th>
                             <td>{{ poster.title }}</td>
                             <td>{{ poster.description }}</td>
                             <td>{{ poster.add_date }}</td>
                             <td>{{ poster.end_date }}</td>
                         </tr>
-                        {% endfor %}
+                    {% endfor %}
                     </tbody>
                 </table>
-
-
-
->>>>>>> 97e622b9d29c94e7ef3feb784fb2cd30b2078170
 
 
             </div>
