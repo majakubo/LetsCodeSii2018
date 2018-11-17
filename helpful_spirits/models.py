@@ -24,6 +24,7 @@ class User(db.Model, UserMixin):
     birthday = db.Column(db.Date, nullable=False)
     phone = db.Column(db.String, nullable=False)
     password_hash = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False)
 
     @property
     def password(self):
