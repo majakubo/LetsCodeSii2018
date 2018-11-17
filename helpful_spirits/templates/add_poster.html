@@ -3,7 +3,21 @@
 
 {% block body %}
     <div id="wrapper-div" style="background-color: #f8f9fa;">
+        <form id="register-form" method="POST" action="/add_poster">
+            {{ form.hidden_tag() }}
+            {{ form.title.label }} {{ form.title(size=15) }} <br/>
+            {{ form.description.label }} {{ form.description(size=15) }} <br/>
+            {{ form.start_date.label }} {{ form.start_date(size=15) }} <br/>
+            {{ form.end_date.label }} {{ form.end_date(size=15) }}<br/>
+            {{ form.city.label }} {{ form.city(size=15) }}<br/>
+            {{ form.location_street.label }} {{ form.location_street(size=15) }}<br/>
+            {{ form.location_street_number.label }} {{ form.location_street_number(size=15) }}<br/>
+            {{ form.category_name.label }} {{ form.category_name(size=15) }}<br/>
+            <button type="submit">Submit</button>
+        </form>
     </div>
+
+
 {% endblock %}
 
 
