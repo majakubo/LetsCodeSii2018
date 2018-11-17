@@ -77,9 +77,9 @@ def add_poster():
     form = AddPoster()
     form.cities = City.get_all()
     if form.validate_on_submit():
-        print(form.city.data,'***********************')
+        print(form.city.data, '***********************')
         city = City.get_by_name(form.city.data)
-        print(9*'*', city.name)
+        print(9 * '*', city.name)
         category = Category.get_by_name(form.category_name.data)
 
         if city is None:
@@ -108,13 +108,8 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-<<<<<<< HEAD
-    posters = Poster.query.all()
-    iterator_ = zip(posters, range(len(Poster.get_all())))
-=======
     all_active_posters = Poster.get_all_active()
     iterator_ = zip(all_active_posters, range(len(all_active_posters)))
->>>>>>> 2ef6b8fb1879c57d798809ed4a2dcf23fc37e075
     return render_template('posters.html', posters=iterator_)
 
 
