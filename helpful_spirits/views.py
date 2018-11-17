@@ -1,10 +1,11 @@
 import datetime
 
-from helpful_spirits import app, db
 from flask import render_template, redirect, flash, request, url_for
-from .models import *
-from .forms import SimpleForm, Register, Login, AddPoster
 from flask_login import login_required, login_user
+from helpful_spirits import app, db
+
+from .forms import SimpleForm, Register, Login, AddPoster
+from .models import *
 
 
 # todo
@@ -89,6 +90,7 @@ def add_poster():
         location = Location.add_new_location(form.location_street.data, form.location_street_number.data, city.id)
 
         # victim id TODO
+        # todo active
         db.session.add(Poster(add_date=datetime.datetime.now().date(),
                               title=form.title.data, description=form.description.data, start_date=form.start_date.data,
                               is_active=True, end_date=form.end_date.data, location_id=location.id, category=category,
@@ -100,8 +102,7 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-    posters = Poster.get_all()
-    iterator_ = zip(posters, range(len(posters)))
+    iterator_ = zip(posters, range(len(Poster.get_all())))
     return render_template('posters.html', posters=iterator_)
 
 
