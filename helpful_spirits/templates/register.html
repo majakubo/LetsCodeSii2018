@@ -3,7 +3,7 @@
 {% block title %} User Register {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" style="background-color: #f8f9fa;">
+<div id="wrapper-div" class="py-3"style="background-color: #f8f9fa;">
     {{ form.hidden_tag() }}
 
     <form method="POST" action="/register">
@@ -28,7 +28,7 @@
         <div class="form-group mx-3">
             {{render_field(form.tel, class_="form-control")}}
         </div>
-        <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
+        <p><input type="submit" class="btn btn-success mx-3" value="Register"></p>
     </form>
 
 
@@ -36,7 +36,5 @@
 
 
 
-    <button class="btn btn-outline-light my-1 my-sm-0" type="submit">Register</button>
-    </form>
 </div>
 {% endblock %}
