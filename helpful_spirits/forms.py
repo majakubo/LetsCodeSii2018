@@ -15,7 +15,6 @@ class Register(Form):
     name = StringField('Name', validators=[DataRequired()])
     surname = StringField('Surname', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
-
     password_repetition = PasswordField('Confirm password',
                                         validators=[DataRequired(), EqualTo(password, message='Passwords must match!')])
     birth_date = StringField('Date', validators=[DataRequired()])
@@ -32,10 +31,9 @@ class SearchCity(Form):
     city_name = StringField('City', validators=[DataRequired()])
 
 
-
 class AddPoster(Form):
     city_choices = [(city.name, city.name) for city in City.get_all()]
-    category_choices = [(category.name, category.name) for category in Category.get_all() ]
+    category_choices = [(category.name, category.name) for category in Category.get_all()]
     start_date = DateField('Start date', validators=[DataRequired()], default=datetime.datetime.now().date())
     end_date = DateField('End date', validators=[DataRequired()])
     title = StringField('Title', validators=[DataRequired()])
