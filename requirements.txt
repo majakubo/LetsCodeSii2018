@@ -4,6 +4,7 @@ apturl==0.5.2
 asn1crypto==0.24.0
 atomicwrites==1.2.1
 attrs==18.2.0
+blinker==1.4
 Brlapi==0.6.6
 certifi==2018.1.18
 chardet==3.0.4
@@ -14,6 +15,7 @@ cupshelpers==1.0
 defer==1.0.6
 distro-info==0.18
 Flask==1.0.2
+Flask-DebugToolbar==0.10.1
 Flask-JWT==0.3.2
 Flask-Login==0.4.1
 Flask-Migrate==2.3.0

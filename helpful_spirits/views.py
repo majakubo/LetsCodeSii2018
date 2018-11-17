@@ -13,14 +13,16 @@ def index():
 def login():
     return "You are in login site"
 
-@app.route('/simple_query', methods=('GET','POST'))
+
+@app.route('/simple_query', methods=('GET', 'POST'))
 def query():
     form = SimpleForm()
     if form.validate_on_submit():
         name = form.name.data
         print(name)
         return redirect('/posters')
-    return render_template('simple_form_test.html',form=form)
+    return render_template('simple_form_test.html', form=form)
+
 
 @app.route('/register')
 def register():
@@ -60,4 +62,3 @@ def test_data():
     db.session.add(p3)
     db.session.add(p4)
     db.session.commit()
-    
