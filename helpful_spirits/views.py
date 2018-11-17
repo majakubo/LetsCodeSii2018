@@ -2,23 +2,16 @@ from helpful_spirits import app
 from flask import render_template
 from .models import *
 
+
 @app.route('/')
 def index():
     return render_template("index.html")
 
-@app.route('/my')
-def my():
-	city = City(name='Gdansk')
-	region = Region(name="Wrzeszcz", city_id=city)
-	
-	location = Location()
-	#user = User()
-	#poster = Poster()
-	return region.city_id.name
 
 @app.route('/login')
 def login():
     return "You are in login site"
+
 
 @app.route('/register')
 def register():
@@ -32,7 +25,8 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
-    return "You are in posters site"
+    posters = Poster.query.all()
+    return render_template('posters.html', posters=posters)
 
 
 @app.route('/posters/<id>')
@@ -43,3 +37,17 @@ def poster(id):
 @app.route('/my_profile')
 def my_profile():
     return "You are in my profile site"
+
+
+# TODO
+@app.route('/testdata')
+def test_data():
+    p1 = Poster(is_active=True, title='ELO')
+    p2 = Poster(is_active=False, title='ELO')
+    p3 = Poster(is_active=False, title='bykankub')
+    p4 = Poster(is_active=False, title='Siemanko byku')
+    db.session.add(p1)
+    db.session.add(p2)
+    db.session.add(p3)
+    db.session.add(p4)
+    db.session.commit()
