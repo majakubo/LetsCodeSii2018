@@ -6,6 +6,7 @@ from .models import *
 from .forms import SimpleForm, Register, Login, AddPoster
 from flask_login import login_required, login_user
 
+
 # todo
 @app.route('/')
 def index():
@@ -32,17 +33,17 @@ def index():
     return render_template("index.html")
 
 
-
 @app.route('/foo', methods=["GET", "POST"])
 @login_required
 def foo():
     return "only logged in user can reach this site"
 
-@app.route('/login', methods= ('GET','POST'))
+
+@app.route('/login', methods=('GET', 'POST'))
 def login():
     form = Login()
     if form.validate_on_submit():
-        #TODO: tutaj jakies odczytanko z bazy
+        # TODO: tutaj jakies odczytanko z bazy
         user = User.query.filter_by(username=form.email.data).first()
         if user is not None:
             login_user(user)
@@ -73,7 +74,7 @@ def register():
 @app.route('/add_poster', methods=("GET", "POST"))
 def add_poster():
     form = AddPoster()
-    # todo
+    form.cities = City.get_all()
     if form.validate_on_submit():
         city = City.get_by_name(form.city.data)
         category = Category.get_by_name(form.category_name.data)
@@ -88,20 +89,18 @@ def add_poster():
         location = Location.add_new_location(form.location_street.data, form.location_street_number.data, city.id)
 
         # victim id TODO
-        poster = Poster(add_date=datetime.datetime.now().date(),
-                        title=form.title.data, description=form.description.data, start_date=form.start_date.data,
-                        is_active=False, end_date=form.end_date.data, location_id=location.id, category=category,
-                        victim_id=1)
-
-        db.session.add(poster)
+        db.session.add(Poster(add_date=datetime.datetime.now().date(),
+                              title=form.title.data, description=form.description.data, start_date=form.start_date.data,
+                              is_active=True, end_date=form.end_date.data, location_id=location.id, category=category,
+                              victim_id=1))
         db.session.commit()
-        print("HERAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaE")
+        return redirect(url_for('posters'))
     return render_template('add_poster.html', form=form)
 
 
 @app.route('/posters')
 def posters():
-    posters = Poster.query.all()
+    posters = Poster.get_all()
     iterator_ = zip(posters, range(len(posters)))
     return render_template('posters.html', posters=iterator_)
 
