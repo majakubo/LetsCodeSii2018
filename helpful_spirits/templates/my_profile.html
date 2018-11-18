@@ -57,14 +57,13 @@
         <div class="col-12">
             <h2>Invites</h2>
             <hr/>
+           <form id="invitation-form" method="POST" action="/my_profile">
             <p>
-
-
-
-
+                {% for poster in posters %}
+                    <h5 class="lead"><a href="posters/{{poster.id}}">{{poster.title}}</a> {{ render_field(invform.status, class_="form-control",type="hidden",value="True" }} </h5> 
+                {% endif %}
             </p>
-
-
+            </form>
         </div>
     </div>
 
