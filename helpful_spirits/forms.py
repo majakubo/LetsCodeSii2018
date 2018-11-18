@@ -16,8 +16,8 @@ class Register(Form):
     surname = StringField('Surname', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     password_repetition = PasswordField('Confirm password',
-                                        validators=[DataRequired(), EqualTo(password, message='Passwords must match!')])
-    birth_date = StringField('Date', validators=[DataRequired()])
+                                        validators=[DataRequired()])
+    birth_date = DateField('Date', validators=[DataRequired()])
     mail = StringField('Email', validators=[DataRequired(), Email()])
     tel = StringField('Phone number', validators=[DataRequired()])
 

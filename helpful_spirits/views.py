@@ -67,10 +67,24 @@ def query():
 def register():
     form = Register()
     if form.validate_on_submit():
-        # TODO: tutaj jakies wpisanko do bazy
+        if User.get_by_mail(form.mail.data) is not None:
+            return render_template('register.html', form=form)
+
+        if form.password.data != form.password_repetition.data:
+            return render_template('register.html', form=form)
+        #generate_password_hash(password)
+        user = User(firstname=form.name.data,
+                    surname=form.surname.data,
+                    birthday=form.birth_date.data,
+                    phone=form.tel.data,
+                    password_hash=form.password.data,
+                    email=form.mail.data)
+
+        db.session.add(user)
+        db.session.commit()
+
         return redirect('/')
     return render_template('register.html', form=form)
-
 
 @app.route('/add_poster', methods=("GET", "POST"))
 def add_poster():
