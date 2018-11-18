@@ -5,29 +5,55 @@
 
 {% block body %}
 <div id="wrapper-div" class="py-3 px-3" style="background-color: #f8f9fa;">
-    <h1>{{ current_user.firstname }} {{ current_user.surname }}</h1>
+    <div class="row">
+        <div class="col-md-6 col-xs-12">
+            <h1>{{ current_user.firstname }} {{ current_user.surname }}</h1>
+            <p>
+                {{ current_user.email }}
+            </p>
+            <br />
+            <h2>Your information</h2>
+            <hr />
+            <h4>Name</h4>
+            <p>{{ current_user.firstname }}</p>
+            <h4>Surname</h4>
+                
+            <p>{{ current_user.surname }}</p>
+                
+            <h4>Phone number</h4>
+            <p>{{ current_user.phone }}</p>
+
+            <h4>Date of birth</h4>
+            <p>{{ current_user.birthday }}</p>
+
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <h2 class="text-center">Volounteering</h2>
+            
+            <form method="POST" action="/my_profile">
+                {{ form.hidden_tag() }}
     
-    <p>
-        {{ current_user.email }}
-    </p>
-    <br />
-    <h2>Your information</h2>
-    <hr />
-        
-        <h4>Name</h4>
-        <p>{{ current_user.firstname }}</p>
-        <h4>Surname</h4>
-        
-        <p>{{ current_user.surname }}</p>
-        
-        <h4>Phone number</h4>
-        <p>{{ current_user.phone }}</p>
-
-        <h4>Date of birth</h4>
-        <p>{{ current_user.birthday }}</p>
+                <div class="form-group mx-3">
+                <!--{{render_field(form.mail, class_="form-control")}}-->
+                </div>
+                <div class="form-group mx-3">
+                 <!--{{render_field(form.name, class_="form-control")}}-->
+                </div>
+                <div class="form-group mx-3">
+                 <!--{{render_field(form.surname, class_="form-control")}}-->
+                </div>
+               
+            <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
+        </form>
+    
 
 
 
+
+
+
+        </div>
+    </div>
 
 
 
