@@ -5,3 +5,5 @@ __pycache__/*
 *.pyc
 *.pyo
 
+helpful_spirits/__pycache__/models.cpython-36.pyc
+helpful_spirits/__pycache__/views.cpython-36.pyc

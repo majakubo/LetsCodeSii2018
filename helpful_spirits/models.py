@@ -78,6 +78,14 @@ class Volunteer(db.Model, UserMixin):
     is_active = db.Column(db.Boolean, default=False, nullable=False)
     city_id = db.Column(db.Integer, db.ForeignKey('city.id'), nullable=False)
 
+    @staticmethod
+    def get_all():
+        return Volunteer.query.all()
+
+    @staticmethod
+    def get_volunteer(id):
+        return Volunteer.query.filter_by(id=id).first()
+
 
 class Specialisation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +94,7 @@ class Specialisation(db.Model):
     @staticmethod
     def get_all():
         return Specialisation.query.all()
+
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -116,17 +125,15 @@ class Poster(db.Model):
 
     @staticmethod
     def get_specific(category, city, specialization):
-        print(")))))))")
         category = Category.get_by_name(category)
         city = City.get_by_name(city)
-        locations_id = [location.id for location in Location.query.filter_by(city_id = city.id).all()]
-        print(locations_id)
+        locations_id = [location.id for location in Location.query.filter_by(city_id=city.id).all()]
         posters = [Poster.query.filter_by(location_id=location_id).first() for location_id in locations_id]
         posters = set(posters) - {None}
         if category != 'anyway':
             posters = [poster for poster in posters if poster.category_id == category.id]
         return posters
-        #return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
+        # return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
 
     @staticmethod
     def get_all():
@@ -143,7 +150,8 @@ class Poster(db.Model):
 
 invited = db.Table('invited',
                    db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
-                   db.Column('poster_id', db.Integer, db.ForeignKey('poster.id')))
+                   db.Column('poster_id', db.Integer, db.ForeignKey('poster.id')),
+                   db.Column('status', db.String(50), nullable=False))
 
 vol_spec = db.Table('vol_spec',
                     db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
