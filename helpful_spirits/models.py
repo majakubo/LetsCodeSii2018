@@ -1,13 +1,13 @@
 from datetime import date
 
-from sqlalchemy import func
+from flask_login import UserMixin
+from werkzeug.security import check_password_hash
 
 from . import db
-from werkzeug.security import check_password_hash, generate_password_hash
-from flask_login import UserMixin
 
 
 class City(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
     volunteers = db.relationship('Volunteer', backref='city')
@@ -133,7 +133,6 @@ class Poster(db.Model):
         if category != 'anyway':
             posters = [poster for poster in posters if poster.category_id == category.id]
         return posters
-        # return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
 
     @staticmethod
     def get_all():
@@ -148,10 +147,24 @@ class Poster(db.Model):
         return Poster.query.filter_by(id=id).first()
 
 
+class Seksmisja(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    volunteer_id = db.Column(db.Integer, nullable=False)
+    poster_id = db.Column(db.Integer, nullable=False)
+    status = db.Column(db.String, nullable=False)
+
+
+
+
 invited = db.Table('invited',
                    db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
                    db.Column('poster_id', db.Integer, db.ForeignKey('poster.id')),
-                   db.Column('status', db.String(50), nullable=False))
+                   db.Column('status'))
+
+invitation = db.Table('invitation',
+                      db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
+                      db.Column('poster_id', db.Integer, db.ForeignKey('poster.id')),
+                      db.Column('status', db.String(50)))
 
 vol_spec = db.Table('vol_spec',
                     db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
