@@ -20,6 +20,7 @@ def index():
     db.session.add(City(name="Krakow"))
     db.session.add(City(name="Katowice"))
     db.session.add(City(name="Grudziadz"))
+    db.session.add(Category(name='any', danger_level=10))
     db.session.add(Specialisation(name="Doctor"))
     db.session.add(Specialisation(name="Electrician"))
     db.session.add(Specialisation(name="Firefighter"))
@@ -120,12 +121,17 @@ def add_poster():
     return render_template('add_poster.html', form=form)
 
 
-@app.route('/posters')
+@app.route('/posters', methods=['GET', 'POST'])
 def posters():
     form = FilterSearch()
-    all_active_posters = Poster.get_all_active()
-    iterator_ = zip(all_active_posters, range(len(all_active_posters)))
-    return render_template('posters.html', posters=iterator_, form=form)
+    if form.validate_on_submit():
+        specific_posters = Poster.get_specific(category=form.category_name.data, city=form.city.data, specialization=None)
+        iterator_ = zip(specific_posters, range(len(specific_posters)))
+        return render_template('posters.html', posters=iterator_, form=form)
+    else:
+        all_active_posters = Poster.get_all_active()
+        iterator_ = zip(all_active_posters, range(len(all_active_posters)))
+        return render_template('posters.html', posters=iterator_, form=form)
 
 
 @app.route('/posters/<id>')
