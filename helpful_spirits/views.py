@@ -141,12 +141,13 @@ def posters():
 
 @app.route('/posters/<id>')
 def poster(id):
+    seksmisje = Seksmisja.query.filter_by(poster_id=id).all()
     form = AddPoster()
     poster = Poster.get_by_id(id)
     if poster is None:
         return redirect(url_for('posters'))
     victim = Victim.find_user_by_id(poster.victim_id)
-    return render_template('poster.html', poster=poster, form=form, victim=victim)
+    return render_template('poster.html', poster=poster, form=form, victim=victim, v_id=seksmisje)
 
 
 # todo
@@ -197,7 +198,8 @@ def my_profile():
         db.session.commit()
         return redirect(url_for('posters'))
 
-    return render_template('my_profile.html', form=form, form_select=form_select, posters=posters, seksmisje_accepted=seksmisje_accepted)
+    return render_template('my_profile.html', form=form, form_select=form_select, posters=posters,
+                           seksmisje_accepted=seksmisje_accepted)
 
 
 @app.route('/posters/take_part/<id>', methods=['GET', 'POST'])

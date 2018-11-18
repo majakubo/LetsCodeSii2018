@@ -4,46 +4,59 @@
 {% block title %} {{ poster.title }} - {{ poster.location.city.name }} {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
-    <div class="row py-3 px-3">
-        <div class="col-md-3 col-xs-12">
-            <h4>Announcer</h4>
-            <hr/>
-            <h5>Name</h5>
-            <p>{{ victim.firstname }}</p>
-            <h5>Surname</h5>
-            <p>{{ victim.surname }}</p>
-            <h5>Phone number</h5>
-            <p>{{ victim.phone }}</p>
-            <h5>E-mail</h5>
-            <p>{{ victim.email }}</p>
-            <br/>
-            <h4>Announcement info</h4>
-            <hr/>
-            <h5>Location</h5>
-            <p>{{ poster.location.city.name }}</p>
-            <h5>Date of begining</h5>
-            <p>{{ poster.add_date }}</p>
-            <h5>Date of ending</h5>
-            <p>{{ poster.end_date }}</p>
-            <h5>Category</h5>
-            <p>{{ poster.category.name }}</p>
-        </div>
-
-        <div class="col-md-9 col-xs-12">
-            <div class="img-wrapper" style="min-height:150px;"><img src ="https://i.imgur.com/asZD3Y4.jpg" style="min-height:100%; width:100%;"></img></div>
-            <div class="container py-3" >
-                <h1>{{ poster.title }}</h1>
+    <div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
+        <div class="row py-3 px-3">
+            <div class="col-md-3 col-xs-12">
+                <h4>Announcer</h4>
                 <hr/>
-                <p>{{ poster.description }}</p>
+                <h5>Name</h5>
+                <p>{{ victim.firstname }}</p>
+                <h5>Surname</h5>
+                <p>{{ victim.surname }}</p>
+                <h5>Phone number</h5>
+                <p>{{ victim.phone }}</p>
+                <h5>E-mail</h5>
+                <p>{{ victim.email }}</p>
+                <br/>
+                <h4>Announcement info</h4>
+                <hr/>
+                <h5>Location</h5>
+                <p>{{ poster.location.city.name }}</p>
+                <h5>Date of begining</h5>
+                <p>{{ poster.add_date }}</p>
+                <h5>Date of ending</h5>
+                <p>{{ poster.end_date }}</p>
+                <h5>Category</h5>
+                <p>{{ poster.category.name }}</p>
             </div>
-            
+
+
+            <h2>Takes part in</h2>
+            {% for seksmisja in seksmisje_accepted %}
+                <h5 class="lead">
+                    <tr>asdsadasdasd
+                        <td><a href="volunteers/{{ v_id.id }}">/volunteers/{{ v_id.id }}</a>
+                        </td>
+
+                    </tr>
+                </h5>
+            {% endfor %}
+
+            <div class="col-md-9 col-xs-12">
+                <div class="img-wrapper" style="min-height:150px;"><img src="https://i.imgur.com/asZD3Y4.jpg"
+                                                                        style="min-height:100%; width:100%;"></img>
+                </div>
+                <div class="container py-3">
+                    <h1>{{ poster.title }}</h1>
+                    <hr/>
+                    <p>{{ poster.description }}</p>
+                </div>
+
+            </div>
+
+
         </div>
-
-
-
     </div>
-</div>
 
 
 {% endblock %}
