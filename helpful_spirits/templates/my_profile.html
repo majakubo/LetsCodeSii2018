@@ -55,6 +55,18 @@
         </div>
         <div class="row">
             <div class="col-12">
+                <h2>Takes part in</h2>
+                <p>
+                    {% for seksmisja in seksmisje_accepted %}
+                        <h5 class="lead">
+                            <tr>
+                                <td><a href="posters/{{ seksmisja.poster_id }}">/posters/{{ seksmisja.poster_id }}</a>
+                                </td>
+
+                            </tr>
+                        </h5>
+                    {% endfor %}
+                </p>
                 <h2>Invites</h2>
                 <hr/>
                 <table class="table text-center">
@@ -70,31 +82,29 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <p>
-                            {% for poster in posters %}
-                                <h5 class="lead">
-                                    {{ poster.title }}
+                    <p>
+                        {% for poster in posters %}
+                            <h5 class="lead">
+                                <tr>
+                                    <td><a href="posters/{{ poster.id }}">/posters/{{ poster.id }}</a></td>
+                                    <td>{{ poster.title }}</td>
+                                    <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
+                                        ...{% endif %}</td>
+                                    <td>{{ poster.location.city.name }}</td>
+                                    <td>
+                                        <form action="posters/take_part/{{ poster.id }}" method="POST">
+                                            <div class="form-group mx-3">
+                                                {{ render_field(form_select.accept_or_reject, class_="form-control") }}
+                                            </div>
+                                            <input type="submit" value="Submit">
+                                        </form>
+                                    </td>
 
-                                    <tr>
-                                        <td><a href="posters/{{ poster.id }}">/posters/{{ poster.id }}</a></td>
-                                        <td>{{ poster.title }}</td>
-                                        <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
-                                            ...{% endif %}</td>
-                                        <td>{{ poster.location.city.name }}</td>
-                                        <td>
-                                            <form action="posters/take_part/{{ poster.id }}" method="POST">
-                                                <select title="select">
-                                                    <option value="accept">accept</option>
-                                                    <option value="reject">reject</option>
-                                                </select>
-                                                <input type="submit" value="Submit">
-                                            </form>
-                                        </td>
+                                </tr>
+                            </h5>
+                        {% endfor %}
+                    </p>
 
-                                    </tr>
-                                </h5>
-                            {% endfor %}
-                        </p>
 
                     </tbody>
                 </table>

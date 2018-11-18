@@ -1,12 +1,11 @@
 import datetime
 
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
-from sqlalchemy import select
 from werkzeug.security import generate_password_hash
 
-from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
+from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration, Select
 from .models import *
 
 
@@ -178,8 +177,12 @@ def my_profile():
     volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
     seksmisje = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
 
+    seksmisje_accepted = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="accept").all()
+
     posters = [Poster.query.filter_by(id=seksmisja.poster_id).first() for seksmisja in seksmisje]
     posters = set(posters) - {None}
+
+    form_select = Select()
     if form.validate_on_submit():
 
         if form.does_accept.data.upper() != "YES":
@@ -194,10 +197,18 @@ def my_profile():
         db.session.commit()
         return redirect(url_for('posters'))
 
-    return render_template('my_profile.html', form=form, posters=posters)
+    return render_template('my_profile.html', form=form, form_select=form_select, posters=posters, seksmisje_accepted=seksmisje_accepted)
 
 
 @app.route('/posters/take_part/<id>', methods=['GET', 'POST'])
 def take_or_reject(id):
-    projectpath = request.form['select']
-    print('AHAHA')
+    form = Select()
+    volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
+    seksmisja = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(poster_id=id).first()
+
+    if form.accept_or_reject.data == 'accept':
+        seksmisja.status = 'accept'
+    else:
+        seksmisja.status = 'reject'
+    db.session.commit()
+    return redirect(url_for('posters'))

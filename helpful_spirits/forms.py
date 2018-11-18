@@ -61,3 +61,8 @@ class VolunteersDeclaration(Form):
     specialisation_choices = [(specialisation.name, specialisation.name) for specialisation in Specialisation.get_all()]
     specialisation = SelectField('Choose specialisation', choices=specialisation_choices)
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
+
+
+class Select(Form):
+    acc = [('accept', 'accept'), ('reject', 'reject')]
+    accept_or_reject = SelectField('City', choices=acc, validators=[DataRequired()])
