@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
 
-from .forms import SimpleForm, Register, Login, AddPoster, FilterSearch
+from .forms import Register, Login, AddPoster, FilterSearch
 from .models import *
 
 
@@ -135,9 +135,6 @@ def poster(id):
     if poster is None:
         return redirect(url_for('posters'))
     victim = Victim.find_user_by_id(poster.victim_id)
-    print(victim.email)
-    print(victim.firstname)
-    print("__________-")
     return render_template('poster.html', poster=poster, form=form, victim=victim)
 
 
