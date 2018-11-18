@@ -50,7 +50,6 @@ class User(db.Model, UserMixin):
     def password(self):
         raise AttributeError('password: write-only field')
 
-
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -58,11 +57,19 @@ class User(db.Model, UserMixin):
     def get_by_mail(mail):
         return User.query.filter_by(email=mail).first()
 
+    @staticmethod
+    def get_by_id(id):
+        return User.query.filter_by(id=id).first()
+
 
 class Victim(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posters = db.relationship('Poster', backref='victim')
+
+    @staticmethod
+    def find_user_by_id(id):
+        return User.get_by_id(id)
 
 
 class Volunteer(db.Model, UserMixin):
@@ -109,7 +116,17 @@ class Poster(db.Model):
 
     @staticmethod
     def get_specific(category, city, specialization):
-        return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
+        print(")))))))")
+        category = Category.get_by_name(category)
+        city = City.get_by_name(city)
+        locations_id = [location.id for location in Location.query.filter_by(city_id = city.id).all()]
+        print(locations_id)
+        posters = [Poster.query.filter_by(location_id=location_id).first() for location_id in locations_id]
+        posters = set(posters) - {None}
+        if category != 'anyway':
+            posters = [poster for poster in posters if poster.category_id == category.id]
+        return posters
+        #return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
 
     @staticmethod
     def get_all():

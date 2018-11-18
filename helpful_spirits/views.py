@@ -1,7 +1,7 @@
 import datetime
 
-from flask import render_template, redirect, flash, request, url_for
-from flask_login import login_required, login_user
+from flask import render_template, redirect, url_for
+from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
 
 from .forms import SimpleForm, Register, Login, AddPoster, FilterSearch
@@ -20,6 +20,7 @@ def index():
     db.session.add(City(name="Krakow"))
     db.session.add(City(name="Katowice"))
     db.session.add(City(name="Grudziadz"))
+    db.session.add(Category(name='any', danger_level=10))
     db.session.add(Specialisation(name="Doctor"))
     db.session.add(Specialisation(name="Electrician"))
     db.session.add(Specialisation(name="Firefighter"))
@@ -51,23 +52,18 @@ def foo():
 def login():
     form = Login()
     if form.validate_on_submit():
-        # TODO: tutaj jakies odczytanko z bazy
-        user = User.query.filter_by(username=form.email.data).first()
-        if user is not None:
+        user = User.get_by_mail(form.mail.data)
+        if user is not None and user.check_password(form.password.data):
             login_user(user)
-            flash('Logged in successfully as {}.'.format(user.firstname))
-            return redirect(request.args.get('next') or url_for('index'))
-        flash('Incorrect username or password.')
-
+            return redirect(url_for('posters'))
     return render_template('login.html', form=form)
 
 
-@app.route('/simple_query', methods=('GET', 'POST'))
-def query():
-    form = SimpleForm()
-    if form.validate_on_submit():
-        return redirect('/posters')
-    return render_template('simple_form_test.html', form=form)
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
 
 
 @app.route('/register', methods=('GET', 'POST'))
@@ -79,12 +75,12 @@ def register():
 
         if form.password.data != form.password_repetition.data:
             return render_template('register.html', form=form)
-        #generate_password_hash(password)
+        password = generate_password_hash(form.password.data)
         user = User(firstname=form.name.data,
                     surname=form.surname.data,
                     birthday=form.birth_date.data,
                     phone=form.tel.data,
-                    password_hash=form.password.data,
+                    password_hash=password,
                     email=form.mail.data)
 
         db.session.add(user)
@@ -93,11 +89,13 @@ def register():
         return redirect('/')
     return render_template('register.html', form=form)
 
+
 @app.route('/add_poster', methods=("GET", "POST"))
+@login_required
 def add_poster():
     form = AddPoster()
     form.cities = City.get_all()
-    if form.validate_on_submit():
+    if current_user is not None and form.validate_on_submit():
         city = City.get_by_name(form.city.data)
         category = Category.get_by_name(form.category_name.data)
 
@@ -113,12 +111,10 @@ def add_poster():
 
         location = Location.add_new_location(form.location_street.data, form.location_street_number.data, city.id)
 
-        # victim id TODO
-        # todo active
         db.session.add(Poster(add_date=datetime.datetime.now().date(),
                               title=form.title.data, description=form.description.data, start_date=form.start_date.data,
                               is_active=True, end_date=form.end_date.data, location_id=location.id, category=category,
-                              victim_id=1))
+                              victim_id=current_user.id))
         db.session.commit()
         return redirect(url_for('posters'))
 
@@ -129,7 +125,7 @@ def add_poster():
 def posters():
     form = FilterSearch()
     if form.validate_on_submit():
-        specific_posters = Poster.get_specific(category=form.category.data, city=form.city.data, specialization=None)
+        specific_posters = Poster.get_specific(category=form.category_name.data, city=form.city.data, specialization=None)
         iterator_ = zip(specific_posters, range(len(specific_posters)))
         return render_template('posters.html', posters=iterator_, form=form)
     else:
@@ -144,9 +140,15 @@ def poster(id):
     poster = Poster.get_by_id(id)
     if poster is None:
         return redirect(url_for('posters'))
-    return render_template('poster.html', poster=poster, form=form)
+    victim = Victim.find_user_by_id(poster.victim_id)
+    print(victim.email)
+    print(victim.firstname)
+    print("__________-")
+    return render_template('poster.html', poster=poster, form=form, victim=victim)
 
 
+# todo
 @app.route('/my_profile')
+@login_required
 def my_profile():
     return "You are in my profile site"
