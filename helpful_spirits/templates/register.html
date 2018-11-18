@@ -4,9 +4,10 @@
 
 {% block body %}
 <div id="wrapper-div" class="py-3"style="background-color: #f8f9fa;">
-    {{ form.hidden_tag() }}
 
     <form method="POST" action="/register">
+            {{ form.hidden_tag() }}
+
         <div class="form-group mx-3">
             {{render_field(form.mail, class_="form-control")}}
         </div>
