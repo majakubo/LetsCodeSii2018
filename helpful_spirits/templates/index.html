@@ -17,9 +17,15 @@
     <p class="lead">We belive in the Spirit of Giving!</p>
     <hr class="my-2">
     <p></p>
+    {% if not current_user.is_authenticated %} 
     <p class="lead">
         <a class="btn btn-success btn-lg" href="/register" role="button">Join us!</a>
     </p>
+    {% else %}
+    <p class="lead">
+            <a class="btn btn-success btn-lg" href="my_profile" role="button">Welcome back, {{ current_user.firstname }}!</a>    
+    </p>
+    {% endif %}
 </div>
 <div style="background-color: #f8f9fa;" class="px-3 py-3">
     <h1 class="text-center">About us</h1>
