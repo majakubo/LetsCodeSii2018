@@ -3,9 +3,10 @@ import datetime
 from flask import render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
+from sqlalchemy import select
+from werkzeug.security import generate_password_hash
 
-
-from .forms import SimpleForm, Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
+from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
 from .models import *
 
 
@@ -114,7 +115,10 @@ def add_poster():
         poster_id = Poster.query.filter_by(title=form.title.data).filter_by(add_date=datetime.datetime.now().date()) \
             .filter_by(description=form.description.data).filter_by(start_date=form.start_date.data).first().id
 
-        send_to_close_volunteers(city.id, poster_id)
+        # todo
+        # close_volunteers = Volunteer.query.filter_by(city_id=city.id).all()
+        # for volunteer in close_volunteers:
+        #    invited.insert(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED')
         return redirect(url_for('posters'))
 
     return render_template('add_poster.html', form=form)
@@ -165,22 +169,17 @@ def concrete_volunteer(id):
     return render_template('volunteer.html', volunteer=volunteer)
 
 
-# todo
-@staticmethod
-def send_to_close_volunteers(city_id, poster_id):
-    close_volunteers = Volunteer.query.filter_by(city_id=city_id).all()
-    for volunteer in close_volunteers:
-        invited.insert(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED')
-
 @app.route('/my_profile', methods=['GET', 'POST'])
 @login_required
 def my_profile():
     form = VolunteersDeclaration()
+    volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
+
+    posters = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
     if form.validate_on_submit():
 
         if form.does_accept.data.upper() != "YES":
             return render_template('my_profile.html', form=form)
-
 
         if form.does_want.data.upper() != "YES":
             return render_template('my_profile.html', form=form)
@@ -191,6 +190,4 @@ def my_profile():
         db.session.commit()
         return redirect(url_for('posters'))
 
-    return render_template('my_profile.html', form=form)
-
-
+    return render_template('my_profile.html', form=form, posters=posters)
