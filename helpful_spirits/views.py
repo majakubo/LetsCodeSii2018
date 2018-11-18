@@ -1,12 +1,12 @@
 import datetime
 
-from flask import render_template, redirect, url_for
+from flask import render_template, redirect, url_for, request
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash
 
-from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration, InvForm
+from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
 from .models import *
 
 
@@ -175,10 +175,11 @@ def concrete_volunteer(id):
 @login_required
 def my_profile():
     form = VolunteersDeclaration()
-    invform = InvForm()
     volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
+    seksmisje = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
 
-    posters = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
+    posters = [Poster.query.filter_by(id=seksmisja.poster_id).first() for seksmisja in seksmisje]
+    posters = set(posters) - {None}
     if form.validate_on_submit():
 
         if form.does_accept.data.upper() != "YES":
@@ -193,4 +194,10 @@ def my_profile():
         db.session.commit()
         return redirect(url_for('posters'))
 
-    return render_template('my_profile.html', form=form, invform=invform, posters=posters)
+    return render_template('my_profile.html', form=form, posters=posters)
+
+
+@app.route('/posters/take_part/<id>', methods=['GET', 'POST'])
+def take_or_reject(id):
+    projectpath = request.form['select']
+    print('AHAHA')

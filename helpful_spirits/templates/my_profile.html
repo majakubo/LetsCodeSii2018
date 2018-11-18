@@ -1,77 +1,109 @@
 {% extends 'base.html' %}
 {% from "includes/_forms.html" import render_field %}
 
-{% block title %} {{current_user.firstname}} {% endblock %}
+{% block title %} {{ current_user.firstname }} {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" class="py-3 px-3" style="background-color: #f8f9fa;">
-    <div class="row">
-        <div class="col-md-6 col-xs-12">
-            <h1>{{ current_user.firstname }} {{ current_user.surname }}</h1>
-            <p>
-                {{ current_user.email }}
-            </p>
-            <br />
-            <h2>Your information</h2>
-            <hr />
-            <h4>Name</h4>
-            <p>{{ current_user.firstname }}</p>
-            <h4>Surname</h4>
+    <div id="wrapper-div" class="py-3 px-3" style="background-color: #f8f9fa;">
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <h1>{{ current_user.firstname }} {{ current_user.surname }}</h1>
+                <p>
+                    {{ current_user.email }}
+                </p>
+                <br/>
+                <h2>Your information</h2>
+                <hr/>
+                <h4>Name</h4>
+                <p>{{ current_user.firstname }}</p>
+                <h4>Surname</h4>
 
-            <p>{{ current_user.surname }}</p>
+                <p>{{ current_user.surname }}</p>
 
-            <h4>Phone number</h4>
-            <p>{{ current_user.phone }}</p>
+                <h4>Phone number</h4>
+                <p>{{ current_user.phone }}</p>
 
-            <h4>Date of birth</h4>
-            <p>{{ current_user.birthday }}</p>
+                <h4>Date of birth</h4>
+                <p>{{ current_user.birthday }}</p>
+
+            </div>
+            <div class="col-md-6 col-xs-12">
+                <h2 class="text-center">Volunteering</h2>
+
+                <form id="register-form" method="POST" action="/my_profile">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group mx-3">
+                        {{ render_field(form.city, class_="form-control") }}
+                    </div>
+                    <div class="form-group mx-3">
+                        {{ render_field(form.specialisation, class_="form-control") }}
+                    </div>
+                    <div class="form-group mx-3">
+                        {{ render_field(form.does_want, class_="form-control") }}
+                        <p class="alert-warning" style="font-size:75%">Please input YES or NO</p>
+                    </div>
+                    <div class="form-group mx-3">
+                        {{ render_field(form.does_accept, class_="form-control") }}
+                        <p class="alert-warning" style="font-size:75%">Please input YES or NO</p>
+                    </div>
+                    <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
+
+                </form>
+
+            </div>
 
         </div>
-        <div class="col-md-6 col-xs-12">
-            <h2 class="text-center">Volunteering</h2>
+        <div class="row">
+            <div class="col-12">
+                <h2>Invites</h2>
+                <hr/>
+                <table class="table text-center">
+                    <thead class="thead-dark">
 
-            <form id="register-form" method="POST" action="/my_profile">
-                {{ form.hidden_tag() }}
-                <div class="form-group mx-3">
-                    {{ render_field(form.city, class_="form-control") }}
-                </div>
-                <div class="form-group mx-3">
-                    {{ render_field(form.specialisation, class_="form-control") }}
-                </div>
-                <div class="form-group mx-3">
-                    {{ render_field(form.does_want, class_="form-control") }}
-                    <p class = "alert-warning" style="font-size:75%">Please input YES or NO</p>
-                </div>
-                <div class="form-group mx-3">
-                    {{ render_field(form.does_accept, class_="form-control") }}
-                    <p class = "alert-warning"  style="font-size:75%">Please input YES or NO</p>
-                </div>
-                <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
+                    <tr>
+                        <th scope="col">url</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Action</th>
 
-            </form>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <p>
+                            {% for poster in posters %}
+                                <h5 class="lead">
+                                    {{ poster.title }}
 
+                                    <tr>
+                                        <td><a href="posters/{{ poster.id }}">/posters/{{ poster.id }}</a></td>
+                                        <td>{{ poster.title }}</td>
+                                        <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
+                                            ...{% endif %}</td>
+                                        <td>{{ poster.location.city.name }}</td>
+                                        <td>
+                                            <form action="posters/take_part/{{ poster.id }}" method="POST">
+                                                <select title="select">
+                                                    <option value="accept">accept</option>
+                                                    <option value="reject">reject</option>
+                                                </select>
+                                                <input type="submit" value="Submit">
+                                            </form>
+                                        </td>
+
+                                    </tr>
+                                </h5>
+                            {% endfor %}
+                        </p>
+
+                    </tbody>
+                </table>
+
+            </div>
         </div>
+
 
     </div>
-    <div class="row">
-        <div class="col-12">
-            <h2>Invites</h2>
-            <hr/>
-           <form id="invitation-form" method="POST" action="/my_profile">
-            <p>
-                {% for poster in posters %}
-                    <h5 class="lead"><a href="posters/{{poster.id}}">{{poster.title}}</a> {{ render_field(invform.status, class_="form-control",type="hidden",value="True" )}} </h5>
-                {% endfor %}
-            </p>
-            </form>
-        </div>
-    </div>
-
-
-
-
-
-</div>
 
 
 {% endblock %}

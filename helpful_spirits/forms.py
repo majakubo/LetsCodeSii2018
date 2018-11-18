@@ -58,11 +58,6 @@ class VolunteersDeclaration(Form):
     city_choices = [(city.name, city.name) for city in City.get_all()]
     does_want = StringField('Declaration of choice', validators=[DataRequired()])
     does_accept = StringField('Please accept regulations', validators=[DataRequired()])
-    specialisation_choices = [(specialisation.name, specialisation.name) for specialisation in 	Specialisation.get_all()]
+    specialisation_choices = [(specialisation.name, specialisation.name) for specialisation in Specialisation.get_all()]
     specialisation = SelectField('Choose specialisation', choices=specialisation_choices)
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
-
-class InvForm(Form):
-    status = StringField('Status')
-
-
