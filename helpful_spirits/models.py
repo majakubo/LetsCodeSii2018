@@ -154,8 +154,6 @@ class Seksmisja(db.Model):
     status = db.Column(db.String, nullable=False)
 
 
-
-
 invited = db.Table('invited',
                    db.Column('volunteer_id', db.Integer, db.ForeignKey('volunteer.id')),
                    db.Column('poster_id', db.Integer, db.ForeignKey('poster.id')),

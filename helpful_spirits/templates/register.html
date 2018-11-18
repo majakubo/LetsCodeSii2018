@@ -3,39 +3,35 @@
 {% block title %} User Register {% endblock %}
 
 {% block body %}
-<div id="wrapper-div" class="py-3"style="background-color: #f8f9fa;">
+    <div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
 
-    <form method="POST" action="/register">
+        <form method="POST" action="/register">
             {{ form.hidden_tag() }}
 
-        <div class="form-group mx-3">
-            {{render_field(form.mail, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.name, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.surname, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.birth_date, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.password, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.password_repetition, class_="form-control")}}
-        </div>
-        <div class="form-group mx-3">
-            {{render_field(form.tel, class_="form-control")}}
-        </div>
-        <p><input type="submit" class="btn btn-success mx-3" value="Register"></p>
-    </form>
+            <div class="form-group mx-3">
+                {{ render_field(form.mail, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.name, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.surname, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.birth_date, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.password, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.password_repetition, class_="form-control") }}
+            </div>
+            <div class="form-group mx-3">
+                {{ render_field(form.tel, class_="form-control") }}
+            </div>
+            <p><input type="submit" class="btn btn-success mx-3" value="Register"></p>
+        </form>
 
 
-
-
-
-
-</div>
+    </div>
 {% endblock %}

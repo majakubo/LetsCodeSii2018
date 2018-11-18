@@ -21,6 +21,7 @@ class Register(Form):
     mail = StringField('Email', validators=[DataRequired(), Email()])
     tel = StringField('Phone number', validators=[DataRequired()])
 
+
 class Login(Form):
     mail = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -52,11 +53,11 @@ class FilterSearch(Form):
     specialisation = SelectField('Specialization', choices=specialisation_choices)
     category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
 
+
 class VolunteersDeclaration(Form):
     city_choices = [(city.name, city.name) for city in City.get_all()]
-    does_want=StringField('Declaration of choice', validators=[DataRequired()])
-    does_accept=StringField('Please accept regulations', validators=[DataRequired()])
+    does_want = StringField('Declaration of choice', validators=[DataRequired()])
+    does_accept = StringField('Please accept regulations', validators=[DataRequired()])
     specialisation_choices = [(specialisation.name, specialisation.name) for specialisation in Specialisation.get_all()]
-    specialisation=SelectField('Choose specialisation', choices=specialisation_choices)
+    specialisation = SelectField('Choose specialisation', choices=specialisation_choices)
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
-

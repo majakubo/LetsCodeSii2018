@@ -66,11 +66,13 @@ def logout():
 def register():
     form = Register()
     if form.validate_on_submit():
+
         if User.get_by_mail(form.mail.data) is not None:
             return render_template('register.html', form=form)
 
         if form.password.data != form.password_repetition.data:
             return render_template('register.html', form=form)
+
         password = generate_password_hash(form.password.data)
         user = User(firstname=form.name.data,
                     surname=form.surname.data,
@@ -115,10 +117,10 @@ def add_poster():
         poster_id = Poster.query.filter_by(title=form.title.data).filter_by(add_date=datetime.datetime.now().date()) \
             .filter_by(description=form.description.data).filter_by(start_date=form.start_date.data).first().id
 
-        # todo
-        # close_volunteers = Volunteer.query.filter_by(city_id=city.id).all()
-        # for volunteer in close_volunteers:
-        #    invited.insert(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED')
+        close_volunteers = Volunteer.query.filter_by(city_id=city.id).all()
+        for volunteer in close_volunteers:
+            db.session.add(Seksmisja(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED'))
+        db.session.commit()
         return redirect(url_for('posters'))
 
     return render_template('add_poster.html', form=form)
