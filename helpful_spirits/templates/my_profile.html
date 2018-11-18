@@ -17,9 +17,9 @@
             <h4>Name</h4>
             <p>{{ current_user.firstname }}</p>
             <h4>Surname</h4>
-                
+
             <p>{{ current_user.surname }}</p>
-                
+
             <h4>Phone number</h4>
             <p>{{ current_user.phone }}</p>
 
@@ -28,40 +28,47 @@
 
         </div>
         <div class="col-md-6 col-xs-12">
-            <h2 class="text-center">Volounteering</h2>
-            
+            <h2 class="text-center">Volunteering</h2>
+           
             <form id="register-form" method="POST" action="/my_profile">
                 {{ form.hidden_tag() }}
-                 <div class="form-group mx-3">
+                <div class="form-group mx-3">
                     {{ render_field(form.city, class_="form-control") }}
                 </div>
-
-                 <div class="form-group mx-3">
+                <div class="form-group mx-3">
                     {{ render_field(form.specialisation, class_="form-control") }}
                 </div>
-                 <div class="form-group mx-3">
+                <div class="form-group mx-3">
                     {{ render_field(form.does_want, class_="form-control") }}
+                    <p class = "alert-warning" style="font-size:75%">Please input YES or NO</p>
                 </div>
                 <div class="form-group mx-3">
                     {{ render_field(form.does_accept, class_="form-control") }}
+                    <p class = "alert-warning"  style="font-size:75%">Please input YES or NO</p>
                 </div>
                 <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
 
-             </form>
+            </form>
+           
+        </div>
 
-        </form>
-    
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Invites</h2>
+            <hr/>
+            <p>
 
 
 
 
-
+            </p>
 
 
         </div>
     </div>
 
-        
+
 
 
 
