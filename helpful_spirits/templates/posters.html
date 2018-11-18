@@ -33,7 +33,7 @@
                         {% for poster, index in posters %}
                             <tr>
                                 <th scope="row">{{ index +  1 }}</th>
-                                <td>{{ poster.title }}</td>
+                                <td><a href="/posters/{{ poster.id }}" > {{ poster.title }}</a></td>
                                 <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
                                     ...{% endif %}</td>
                                 <td>{{ poster.location.city.name }}</td>
