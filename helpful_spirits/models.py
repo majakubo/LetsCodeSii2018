@@ -115,6 +115,20 @@ class Poster(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
     @staticmethod
+    def get_specific(category, city, specialization):
+        print(")))))))")
+        category = Category.get_by_name(category)
+        city = City.get_by_name(city)
+        locations_id = [location.id for location in Location.query.filter_by(city_id = city.id).all()]
+        print(locations_id)
+        posters = [Poster.query.filter_by(location_id=location_id).first() for location_id in locations_id]
+        posters = set(posters) - {None}
+        if category != 'anyway':
+            posters = [poster for poster in posters if poster.category_id == category.id]
+        return posters
+        #return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
+
+    @staticmethod
     def get_all():
         return Poster.query.all()
 
