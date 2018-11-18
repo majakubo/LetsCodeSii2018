@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} Posters {% endblock %}
+{% from "includes/_forms.html" import render_field %}
+{% block body %}
+    <div id="wrapper-div" style="background-color: #f8f9fa;">
+        <div class="row py-3 px-3">
+            <div class="col-9">
+                <div id="posters">
+                    <table class="table text-center">
+                        <thead class="thead-dark">
+
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Firstname</th>
+                            <th scope="col">Surname</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">{{ index +  1 }}</th>
+                            <td><a href="/volunteers/{{ volunteer.id }}"> {{ volunteer_firstname }}</a></td>
+                            <td>{{ volunteer.surname }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

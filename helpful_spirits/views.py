@@ -42,12 +42,6 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/foo', methods=["GET", "POST"])
-@login_required
-def foo():
-    return "only logged in user can reach this site"
-
-
 @app.route('/login', methods=('GET', 'POST'))
 def login():
     form = Login()
@@ -116,6 +110,10 @@ def add_poster():
                               is_active=True, end_date=form.end_date.data, location_id=location.id, category=category,
                               victim_id=current_user.id))
         db.session.commit()
+        poster_id = Poster.query.filter_by(title=form.title.data).filter_by(add_date=datetime.datetime.now().date()) \
+            .filter_by(description=form.description.data).filter_by(start_date=form.start_date.data).first().id
+
+        send_to_close_volunteers(city.id, poster_id)
         return redirect(url_for('posters'))
 
     return render_template('add_poster.html', form=form)
@@ -125,7 +123,8 @@ def add_poster():
 def posters():
     form = FilterSearch()
     if form.validate_on_submit():
-        specific_posters = Poster.get_specific(category=form.category_name.data, city=form.city.data, specialization=None)
+        specific_posters = Poster.get_specific(category=form.category_name.data, city=form.city.data,
+                                               specialization=None)
         iterator_ = zip(specific_posters, range(len(specific_posters)))
         return render_template('posters.html', posters=iterator_, form=form)
     else:
@@ -144,8 +143,36 @@ def poster(id):
     return render_template('poster.html', poster=poster, form=form, victim=victim)
 
 
-# todo
 @app.route('/my_profile')
 @login_required
 def my_profile():
     return render_template('my_profile.html')
+
+
+# todo
+@app.route('/volunteers')
+def volunteers():
+    volunteers = Volunteer.get_all()
+    users_id = [volunteer.id for volunteer in Volunteer.get_all()]
+    users = [User.query.filter_by(id=user_id) for user_id in users_id]
+    users = set(users) - {None}
+    iterator_ = zip(volunteers, range(len(volunteers)))
+    user_iterator_ = zip(users, range(len(users)))
+    return render_template('volunteers.html', volunteers=iterator_, users=user_iterator_)
+
+
+# todo
+@app.route('/volunteers/<id>')
+def concrete_volunteer(id):
+    volunteer = Volunteer.get_volunteer(id)
+    if volunteer is None:
+        return redirect(url_for('volunteers'))
+    return render_template('volunteer.html', volunteer=volunteer)
+
+
+# todo
+@staticmethod
+def send_to_close_volunteers(city_id, poster_id):
+    close_volunteers = Volunteer.query.filter_by(city_id=city_id).all()
+    for volunteer in close_volunteers:
+        invited.insert(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED')
