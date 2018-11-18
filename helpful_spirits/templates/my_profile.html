@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-6 col-xs-12">
             <h2 class="text-center">Volunteering</h2>
-           
+
             <form id="register-form" method="POST" action="/my_profile">
                 {{ form.hidden_tag() }}
                 <div class="form-group mx-3">
@@ -49,7 +49,7 @@
                 <p><input type="submit" class="btn btn-success mx-3" value="Submit"></p>
 
             </form>
-           
+
         </div>
 
     </div>
@@ -60,8 +60,8 @@
            <form id="invitation-form" method="POST" action="/my_profile">
             <p>
                 {% for poster in posters %}
-                    <h5 class="lead"><a href="posters/{{poster.id}}">{{poster.title}}</a> {{ render_field(invform.status, class_="form-control",type="hidden",value="True" }} </h5> 
-                {% endif %}
+                    <h5 class="lead"><a href="posters/{{poster.id}}">{{poster.title}}</a> {{ render_field(invform.status, class_="form-control",type="hidden",value="True" )}} </h5>
+                {% endfor %}
             </p>
             </form>
         </div>
