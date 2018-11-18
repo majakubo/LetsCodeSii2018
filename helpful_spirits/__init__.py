@@ -9,7 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ultrasecret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
-app.config['DEBUG'] = True
+app.config['DEBUG'] = False
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()

@@ -175,10 +175,14 @@ def concrete_volunteer(id):
 @login_required
 def my_profile():
     form = VolunteersDeclaration()
-    volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
-    seksmisje = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
+    volunteer = Volunteer.query.filter_by(user_id=current_user.id).first()
+    seksmisje = []
+    seksmisje_accepted = []
+    if volunteer is not None:
+        volunteer_id = volunteer.id
+        seksmisje = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
 
-    seksmisje_accepted = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="accept").all()
+        seksmisje_accepted = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="accept").all()
 
     posters = [Poster.query.filter_by(id=seksmisja.poster_id).first() for seksmisja in seksmisje]
     posters = set(posters) - {None}
