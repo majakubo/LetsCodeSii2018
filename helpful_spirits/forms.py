@@ -47,6 +47,7 @@ class FilterSearch(Form):
     city_choices = [(city.name, city.name) for city in City.get_all()]
     category_choices = [(category.name, category.name) for category in Category.get_all()]
     specialisation_choices = [(specialisation.name, specialisation.name) for specialisation in Specialisation.get_all()]
+
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
     specialisation = SelectField('Specialization', choices=specialisation_choices)
     category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
