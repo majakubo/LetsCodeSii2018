@@ -4,7 +4,8 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
 
-from .forms import Register, Login, AddPoster, FilterSearch
+
+from .forms import SimpleForm, Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
 from .models import *
 
 
@@ -143,12 +144,6 @@ def poster(id):
     return render_template('poster.html', poster=poster, form=form, victim=victim)
 
 
-@app.route('/my_profile')
-@login_required
-def my_profile():
-    return render_template('my_profile.html')
-
-
 # todo
 @app.route('/volunteers')
 def volunteers():
@@ -176,3 +171,26 @@ def send_to_close_volunteers(city_id, poster_id):
     close_volunteers = Volunteer.query.filter_by(city_id=city_id).all()
     for volunteer in close_volunteers:
         invited.insert(volunteer_id=volunteer.id, poster_id=poster_id, status='INVITED')
+
+@app.route('/my_profile', methods=['GET', 'POST'])
+@login_required
+def my_profile():
+    form = VolunteersDeclaration()
+    if form.validate_on_submit():
+
+        if form.does_accept.data.upper() != "YES":
+            return render_template('my_profile.html', form=form)
+
+
+        if form.does_want.data.upper() != "YES":
+            return render_template('my_profile.html', form=form)
+
+        db.session.add(Volunteer(user_id=current_user.id,
+                                 is_active=True,
+                                 city_id=City.query.filter_by(name=form.city.data).first().id))
+        db.session.commit()
+        return redirect(url_for('posters'))
+
+    return render_template('my_profile.html', form=form)
+
+
