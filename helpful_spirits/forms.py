@@ -46,7 +46,14 @@ class AddPoster(Form):
 class FilterSearch(Form):
     city_choices = [(city.name, city.name) for city in City.get_all()]
     category_choices = [(category.name, category.name) for category in Category.get_all()]
-    specialization_choices = [(specialization.name, specialization.name) for specialization in Specialisation.get_all()]
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
     specialisation = SelectField('Specialization', choices=specialization_choices)
     category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
+
+class volunteersDeclaration(Form):
+    does_want=StringField('Declaration of choice', validators=[DataRequired()])
+    does_accept=StringField('Please accept regulations', validators=[DataRequired()])
+    specialization_choices = [(specialization.name, specialization.name) for specialization in Specialisation.get_all()]
+    specialisation=SelectField('Choose specialisation', choices=specialization_choices)
+
+
