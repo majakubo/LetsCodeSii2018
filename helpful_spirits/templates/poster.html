@@ -1,52 +1,48 @@
 {% extends 'base.html' %}
 {% from "includes/_forms.html" import render_field %}
 
-{% block title %} User Login {% endblock %}
+{% block title %} {{ poster.title }} - {{ poster.location.city.name }} {% endblock %}
 
 {% block body %}
-    <div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
-        {% if form.errors %}
-            <div class="alert alert-danger py-2 my-1">Wrong data!</div>
-        {% endif %}
+<div id="wrapper-div" class="py-3" style="background-color: #f8f9fa;">
+    <div class="row py-3 px-3">
+        <div class="col-3">
+            <h4>Announcer</h4>
+            <hr/>
+            <h5>Name</h5>
+            <p>{{ poster.victim.name }}</p>
+            <h5>Surname</h5>
+            <p>{{ poster.victim.surname }}</p>
+            <h5>Phone number</h5>
+            <p>{{ poster.victim.phone }}</p>
+            <h5>E-mail</h5>
+            <p>{{ poster.victim.email }}</p>
+            <br/>
+            <h4>Announcement info</h4>
+            <hr/>
+            <h5>Location</h5>
+            <p>{{ poster.location.city.name }}</p>
+            <h5>Date of begining</h5>
+            <p>{{ poster.add_date }}</p>
+            <h5>Date of ending</h5>
+            <p>{{ poster.end_date }}</p>
+            <h5>Category</h5>
+            <p>{{ poster.category.name }}</p>
+        </div>
 
-        {% if form.city_error %}
-            <div class="alert alert-danger py-2 my-1">Wrong city!</div>
-        {% endif %}
-        {% if form.category_error %}
-            <div class="alert alert-danger py-2 my-1">Wrong category!</div>
-        {% endif %}
+        <div class="col-9">
+            <div class="img-wrapper" style="min-height:150px;"><img src="#">HeaderImage</img></div>
+            <div class="container py-3" >
+                <h1>{{ poster.title }}</h1>
+                <hr/>
+                <p>{{ poster.description }}</p>
+            </div>
+            
+        </div>
 
-        {% if form.date_error %}
-            <div class="alert alert-danger py-2 my-1">Wrong date!</div>
-        {% endif %}
-
-
-        <table class="table text-center">
-            <thead class="thead-dark">
-
-            <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Location</th>
-                <th scope="col">Category</th>
-                <th scope="col">Author</th>
-                <th scope="col">Submit date</th>
-                <th scope="col">Finish date</th>
-            </tr>
-            <tr>
-                <td>{{ poster.title }}</td>
-                <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
-                    ...{% endif %}</td>
-                <td>{{ poster.location.city.name }}</td>
-                <td>{{ poster.category.name }}</td>
-                <td>{{ poster.victim.name }} {{ poster.victim.surname }}</td>
-                <td>{{ poster.add_date }}</td>
-                <td>{{ poster.end_date }}</td>
-            </tr>
-            </thead>
-        </table>
 
     </div>
+</div>
 
 
 {% endblock %}
