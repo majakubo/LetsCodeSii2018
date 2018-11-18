@@ -113,11 +113,12 @@ def posters():
 
 @app.route('/posters/<id>')
 def poster(id):
-    #poster = Poster.get_by_id(id)
-    #if poster is None:
-    #    return redirect(url_for('posters'))
-    #return render_template('poster.html', poster=poster)
-    pass
+    form = AddPoster()
+    poster = Poster.get_by_id(id)
+    if poster is None:
+        return redirect(url_for('posters'))
+    return render_template('poster.html', poster=poster, form=form)
+
 
 @app.route('/my_profile')
 def my_profile():
