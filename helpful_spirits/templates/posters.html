@@ -1,15 +1,30 @@
 {% extends 'base.html' %}
 {% block title %} Posters {% endblock %}
-
+{% from "includes/_forms.html" import render_field %}
 {% block body %}
     <div id="wrapper-div" style="background-color: #f8f9fa;">
         <div class="row py-3 px-3">
             <div class="col-3 text-center">
                 <h2>Filters</h2>
                 <p>
-                    Filters place
+                     {% if form.errors %}
+                        <div class="alert alert-danger py-2 my-1">Wrong data!</div>
+                     {% endif %}
+                     <form id="register-form" method="POST" action="/add_poster">
+                        {{ form.hidden_tag() }}
+                         <div class="form-group mx-3">
+                            {{ render_field(form.city, class_="form-control") }}
+                        </div>
 
+                         <div class="form-group mx-3">
+                            {{ render_field(form.specialisation, class_="form-control") }}
+                        </div>
+                         <div class="form-group mx-3">
+                            {{ render_field(form.category_name, class_="form-control") }}
+                        </div>
+                        <p><input type="submit" class="btn btn-success mx-3" value="Register"></p>
 
+                     </form>
                 </p>
             </div>
             <div class="col-9">
@@ -23,7 +38,6 @@
                             <th scope="col">Description</th>
                             <th scope="col">Location</th>
                             <th scope="col">Category</th>
-                            <th scope="col">Author</th>
                             <th scope="col">Submit date</th>
                             <th scope="col">Finish date</th>
                         </tr>
@@ -33,12 +47,11 @@
                         {% for poster, index in posters %}
                             <tr>
                                 <th scope="row">{{ index +  1 }}</th>
-                                <td>{{ poster.title }}</td>
+                                <td><a href="/posters/{{ poster.id }}" > {{ poster.title }}</a></td>
                                 <td>{{ poster.description[0:18] }}{% if poster.description[18]!=nil %}
                                     ...{% endif %}</td>
                                 <td>{{ poster.location.city.name }}</td>
                                 <td>{{ poster.category.name }}</td>
-                                <td>{{ poster.victim.name }} {{ poster.victim.surname }}</td>
                                 <td>{{ poster.add_date }}</td>
                                 <td>{{ poster.end_date }}</td>
                             </tr>

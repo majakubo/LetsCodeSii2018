@@ -50,7 +50,6 @@ class User(db.Model, UserMixin):
     def password(self):
         raise AttributeError('password: write-only field')
 
-
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
@@ -58,11 +57,19 @@ class User(db.Model, UserMixin):
     def get_by_mail(mail):
         return User.query.filter_by(email=mail).first()
 
+    @staticmethod
+    def get_by_id(id):
+        return User.query.filter_by(id=id).first()
+
 
 class Victim(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     posters = db.relationship('Poster', backref='victim')
+
+    @staticmethod
+    def find_user_by_id(id):
+        return User.get_by_id(id)
 
 
 class Volunteer(db.Model, UserMixin):
@@ -76,6 +83,9 @@ class Specialisation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
 
+    @staticmethod
+    def get_all():
+        return Specialisation.query.all()
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)

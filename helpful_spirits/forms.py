@@ -4,7 +4,7 @@ from flask_wtf import Form
 from wtforms.fields import StringField, PasswordField, DateField, SelectField
 from wtforms.validators import DataRequired, EqualTo, Email
 
-from .models import City, Category
+from .models import City, Category, Specialisation
 
 
 class SimpleForm(Form):
@@ -20,7 +20,6 @@ class Register(Form):
     birth_date = DateField('Date', validators=[DataRequired()])
     mail = StringField('Email', validators=[DataRequired(), Email()])
     tel = StringField('Phone number', validators=[DataRequired()])
-
 
 class Login(Form):
     mail = StringField('Email', validators=[DataRequired(), Email()])
@@ -41,4 +40,13 @@ class AddPoster(Form):
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
     location_street = StringField('Street', validators=[DataRequired()])
     location_street_number = StringField('Street number', validators=[DataRequired()])
+    category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
+
+
+class FilterSearch(Form):
+    city_choices = [(city.name, city.name) for city in City.get_all()]
+    category_choices = [(category.name, category.name) for category in Category.get_all()]
+    specialization_choices = [(specialization.name, specialization.name) for specialization in Specialisation.get_all()]
+    city = SelectField('City', choices=city_choices, validators=[DataRequired()])
+    specialisation = SelectField('Specialization', choices=specialization_choices)
     category_name = SelectField('Category', choices=category_choices, validators=[DataRequired()])
