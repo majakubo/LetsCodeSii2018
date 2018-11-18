@@ -60,3 +60,5 @@ class VolunteersDeclaration(Form):
     specialisation=SelectField('Choose specialisation', choices=specialisation_choices)
     city = SelectField('City', choices=city_choices, validators=[DataRequired()])
 
+
+
