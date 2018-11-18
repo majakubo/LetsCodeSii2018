@@ -6,7 +6,7 @@ from helpful_spirits import app, db
 from sqlalchemy import select
 from werkzeug.security import generate_password_hash
 
-from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration
+from .forms import Register, Login, AddPoster, FilterSearch, VolunteersDeclaration, InvForm
 from .models import *
 
 
@@ -173,6 +173,7 @@ def concrete_volunteer(id):
 @login_required
 def my_profile():
     form = VolunteersDeclaration()
+    invform = InvForm()
     volunteer_id = Volunteer.query.filter_by(user_id=current_user.id).first().id
 
     posters = Seksmisja.query.filter_by(volunteer_id=volunteer_id).filter_by(status="INVITED").all()
@@ -190,4 +191,4 @@ def my_profile():
         db.session.commit()
         return redirect(url_for('posters'))
 
-    return render_template('my_profile.html', form=form, posters=posters)
+    return render_template('my_profile.html', form=form, invform=invform, posters=posters)
