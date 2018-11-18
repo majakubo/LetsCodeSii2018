@@ -125,12 +125,17 @@ def add_poster():
     return render_template('add_poster.html', form=form)
 
 
-@app.route('/posters')
+@app.route('/posters', methods=['GET', 'POST'])
 def posters():
     form = FilterSearch()
-    all_active_posters = Poster.get_all_active()
-    iterator_ = zip(all_active_posters, range(len(all_active_posters)))
-    return render_template('posters.html', posters=iterator_, form=form)
+    if form.validate_on_submit():
+        specific_posters = Poster.get_specific(category=form.category.data, city=form.city.data, specialization=None)
+        iterator_ = zip(specific_posters, range(len(specific_posters)))
+        return render_template('posters.html', posters=iterator_, form=form)
+    else:
+        all_active_posters = Poster.get_all_active()
+        iterator_ = zip(all_active_posters, range(len(all_active_posters)))
+        return render_template('posters.html', posters=iterator_, form=form)
 
 
 @app.route('/posters/<id>')

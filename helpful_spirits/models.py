@@ -108,6 +108,10 @@ class Poster(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
     @staticmethod
+    def get_specific(category, city, specialization):
+        return Poster.query.filter_by(is_active=True).filter(Poster.end_date >= date.today()).filter(category=category).all()
+
+    @staticmethod
     def get_all():
         return Poster.query.all()
 

@@ -10,7 +10,7 @@
                      {% if form.errors %}
                         <div class="alert alert-danger py-2 my-1">Wrong data!</div>
                      {% endif %}
-                     <form id="register-form" method="POST" action="/add_poster">
+                     <form id="register-form" method="POST" action="/posters">
                         {{ form.hidden_tag() }}
                          <div class="form-group mx-3">
                             {{ render_field(form.city, class_="form-control") }}
