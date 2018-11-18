@@ -4,7 +4,7 @@ from flask import render_template, redirect, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 from helpful_spirits import app, db
 
-from .forms import Register, Login, AddPoster
+from .forms import SimpleForm, Register, Login, AddPoster, FilterSearch
 from .models import *
 
 
@@ -20,6 +20,13 @@ def index():
     db.session.add(City(name="Krakow"))
     db.session.add(City(name="Katowice"))
     db.session.add(City(name="Grudziadz"))
+    db.session.add(Specialisation(name="Doctor"))
+    db.session.add(Specialisation(name="Electrician"))
+    db.session.add(Specialisation(name="Firefighter"))
+    db.session.add(Specialisation(name="Nurse"))
+    db.session.add(Specialisation(name="Driver"))
+    db.session.add(Specialisation(name="Painter"))
+    db.session.add(Specialisation(name="Anything"))
     db.session.add(Category(name="Flood", danger_level=8))
     db.session.add(Category(name="Tsunami", danger_level=10))
     db.session.add(Category(name="Earthquake", danger_level=10))
@@ -115,9 +122,10 @@ def add_poster():
 
 @app.route('/posters')
 def posters():
+    form = FilterSearch()
     all_active_posters = Poster.get_all_active()
     iterator_ = zip(all_active_posters, range(len(all_active_posters)))
-    return render_template('posters.html', posters=iterator_)
+    return render_template('posters.html', posters=iterator_, form=form)
 
 
 @app.route('/posters/<id>')

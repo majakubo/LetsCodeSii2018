@@ -1,9 +1,8 @@
 <nav class="navbar navbar-dark bg-success sticky-top">
   <a class="navbar-brand" href="/">Helpful Spirits</a>
-  <form class="form-inline">
-    <a class="btn btn-outline-light my-1 my-0 mx-1" href="/posters">Show All</a>
-  </form>
+  
   <ul class="nav list-inline">
+
       {% if current_user.is_authenticated %}
 
           <li class="nav-item">
@@ -30,6 +29,7 @@
               <a class="nav-link btn btn-outline-light mx-1" href="/register">Register</a>
           </li>
       {% endif %}
+
 
   </ul>
 </nav>
