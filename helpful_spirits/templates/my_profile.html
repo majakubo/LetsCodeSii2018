@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% from "includes/_forms.html" import render_field %}
+
+{% block title %} {{current_user.firstname}} {% endblock %}
+
+{% block body %}
+<div id="wrapper-div" class="py-3 px-3" style="background-color: #f8f9fa;">
+    <h1>{{ current_user.firstname }} {{ current_user.surname }}</h1>
+    
+    <p>
+        {{ current_user.email }}
+    </p>
+    <br />
+    <h2>Your information</h2>
+    <hr />
+        
+        <h4>Name</h4>
+        <p>{{ current_user.firstname }}</p>
+        <h4>Surname</h4>
+        
+        <p>{{ current_user.surname }}</p>
+        
+        <h4>Phone number</h4>
+        <p>{{ current_user.phone }}</p>
+
+        <h4>Date of birth</h4>
+        <p>{{ current_user.birthday }}</p>
+
+
+
+
+
+
+</div>
+
+
+{% endblock %}

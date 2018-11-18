@@ -142,4 +142,4 @@ def poster(id):
 @app.route('/my_profile')
 @login_required
 def my_profile():
-    return "You are in my profile site"
+    return render_template('my_profile.html')
