@@ -2,17 +2,34 @@
   <a class="navbar-brand" href="/">Helpful Spirits</a>
   
   <ul class="nav list-inline">
-    <li class="nav-item">
-      <a class="nav-link btn btn-outline-light mx-1" href="/add_poster">Add announcement</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link btn btn-outline-light mx-1" href="/posters">Annoucements</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link btn btn-outline-light mx-1" href="/login">Login</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link btn btn-outline-light mx-1" href="/register">Register</a>
-    </li>
+
+      {% if current_user.is_authenticated %}
+
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/my_profile">{{ current_user.firstname }}
+                  {{ current_user.surname }}</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/add_poster">Add announcement</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/logout">Logout</a>
+          </li>
+      {% endif %}
+
+      {% if not current_user.is_authenticated %}
+          {{ current_user.name }}
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/login">Add announcement</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/login">Login</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link btn btn-outline-light mx-1 my-1" href="/register">Register</a>
+          </li>
+      {% endif %}
+
+
   </ul>
 </nav>
