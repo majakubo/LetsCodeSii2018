@@ -17,7 +17,7 @@
                         </thead>
                         <tbody>
 
-                        {% for volunteer, index in volunteers %}
+                        {% for volunteer in volunteers %}
                             <tr>
                                 <th scope="row">{{ index +  1 }}</th>
                                 <td><a href="/volunteers/{{ volunteer.id }}"> {{ volunteer_firstname }}</a></td>
