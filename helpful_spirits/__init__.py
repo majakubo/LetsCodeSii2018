@@ -17,7 +17,17 @@ login_manager.session_protection = "strong"
 login_manager.init_app(app)
 
 
+
+
 toolbar = DebugToolbarExtension(app)
+
+
 
 from . import views
 from . import models
+
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return models.User.query.filter_by(id=user_id).first()

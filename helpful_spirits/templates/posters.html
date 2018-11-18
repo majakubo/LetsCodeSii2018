@@ -23,7 +23,6 @@
                             <th scope="col">Description</th>
                             <th scope="col">Location</th>
                             <th scope="col">Category</th>
-                            <th scope="col">Author</th>
                             <th scope="col">Submit date</th>
                             <th scope="col">Finish date</th>
                         </tr>
@@ -38,7 +37,6 @@
                                     ...{% endif %}</td>
                                 <td>{{ poster.location.city.name }}</td>
                                 <td>{{ poster.category.name }}</td>
-                                <td>{{ poster.victim.name }} {{ poster.victim.surname }}</td>
                                 <td>{{ poster.add_date }}</td>
                                 <td>{{ poster.end_date }}</td>
                             </tr>
